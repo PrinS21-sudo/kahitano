@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Counter | Prince Kyle G. Basco</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/source-game-style.css">
+    <link rel="stylesheet" href="../css/game-style.css">
+    <link rel="stylesheet" href="../css/dark-mode.css">
+    <link rel="stylesheet" href="../css/portfolio.css">
+    <link rel="stylesheet" href="../css/game-themes.css">
+    <style id="paperSize"></style>
+</head>
+<body class="portfolio-page mini-game-page food-page">
+    <button class="theme-fab" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="sun-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="moon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+    <header class="header portfolio-page-header portfolio-site-header">
+        <a href="../index.html#home" class="logo" aria-label="Prince Kyle G. Basco home"><svg class="logo-flower" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 18C16 10 10 8 7 11C4 14 6 20 14 22C7 24 5 30 8 33C11 36 17 33 20 26C23 33 29 36 32 33C35 30 33 24 26 22C34 20 36 14 33 11C30 8 24 10 20 18Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="20" cy="22" r="2.5" fill="currentColor"/></svg><span>PRINS</span></a>
+        <nav class="main-nav" aria-label="Main navigation"><a href="../index.html#home" class="nav-link">Home</a><a href="../games.html" class="nav-link active">Games</a><a href="../about.html" class="nav-link">About</a></nav>
+        <div class="header-right"><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu"><i data-lucide="menu"></i></button></div>
+    </header>
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true"><button class="mobile-menu-close" id="menuClose" type="button" aria-label="Close menu"><i data-lucide="x"></i></button><nav aria-label="Mobile navigation"><a href="../index.html#home">Home</a><a href="../games.html">Games</a><a href="../about.html">About</a></nav></div>
+
+    <div class="background" aria-hidden="true">
+        <div class="square square1"></div>
+        <div class="square square2"></div>
+        <div class="square square3"></div>
+        <div class="square square4"></div>
+        <div class="square square5"></div>
+        <div class="square square6"></div>
+    </div>
+
+    <main class="food-main">
+        <header class="food-heading">
+            <h1>Food <span>Counter</span></h1>
+            <p>Build an order, adjust it as you go, then settle up.</p>
+        </header>
+
+        <div class="food-layout">
+            <section class="food-menu" aria-labelledby="menu-title">
+                <div class="food-section-heading">
+                    <h2 id="menu-title">Menu and prices</h2>
+                    <span class="menu-rate">$1 = ₱58.00</span>
+                </div>
+
+                <div class="menu-list" aria-live="polite"></div>
+
+                <form id="orderForm" class="order-form">
+                    <label for="food">Add to order</label>
+                    <div class="order-controls">
+                        <select id="food" name="food" aria-label="Menu item"></select>
+                        <input id="quantity" name="quantity" type="number" min="1" max="100" step="1" value="1" aria-label="Quantity">
+                        <button class="food-button" type="submit">ADD ITEM <span aria-hidden="true">+</span></button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="food-cart" aria-labelledby="cart-title">
+                <div class="food-section-heading">
+                    <h2 id="cart-title">Your order</h2>
+                    <span id="saveStatus" class="save-status" aria-live="polite">Connecting…</span>
+                </div>
+
+                <div class="cart-table-wrap">
+                    <table class="cart-table">
+                        <thead>
+                            <tr><th scope="col">Item</th><th scope="col">Qty</th><th scope="col">Subtotal</th><th scope="col"><span class="visually-hidden">Remove</span></th></tr>
+                        </thead>
+                        <tbody id="orderList"></tbody>
+                    </table>
+                    <p id="emptyOrder" class="empty-order">Your order is empty. Add something from the menu.</p>
+                </div>
+
+                <div class="cart-total"><span>ORDER TOTAL</span><strong>₱<span id="total">0.00</span></strong></div>
+
+                <div class="payment-panel">
+                    <label for="payment">Cash received</label>
+                    <div class="payment-controls">
+                        <div class="currency-input"><span>₱</span><input id="payment" type="number" min="0" step="0.01" placeholder="0.00"></div>
+                        <button id="changeButton" class="food-button food-button-secondary" type="button">CALCULATE</button>
+                    </div>
+                    <div class="change-line"><span>CHANGE</span><strong>₱<span id="change">0.00</span></strong></div>
+                </div>
+
+                <div class="cart-actions">
+                    <button id="printButton" class="food-button" type="button">PRINT RECEIPT</button>
+                    <button id="clearButton" class="text-button" type="button">Clear order</button>
+                </div>
+                <p id="message" class="food-message" aria-live="polite"></p>
+            </section>
+        </div>
+    </main>
+
+    <section id="receipt" aria-label="Printed order receipt">
+        <div class="receipt-center">
+            <h2>FOOD CORNER</h2>
+            <p>ORDER RECEIPT</p>
+            <p id="receiptDate"></p>
+        </div>
+        <div class="receipt-rule"></div>
+        <div class="receipt-row receipt-head"><strong>ITEM / QTY</strong><strong>AMOUNT</strong></div>
+        <div class="receipt-rule"></div>
+        <div id="receiptItems"></div>
+        <div class="receipt-summary">
+            <div class="receipt-rule"></div>
+            <div class="receipt-row"><strong>TOTAL</strong><strong id="receiptTotal"></strong></div>
+            <div class="receipt-row"><span>CASH</span><span id="receiptPayment"></span></div>
+            <div class="receipt-row"><span>CHANGE</span><span id="receiptChange"></span></div>
+            <div class="receipt-rule"></div>
+            <div class="receipt-center"><p>Thank you for your order!</p><p>Please come again.</p></div>
+        </div>
+    </section>
+
+    <script>
+        var menuItems = [
+            { key: 'burger', name: 'Burger', price: 5000, group: 'Menu and Prices', art: '🍔' },
+            { key: 'spaghetti', name: 'Spaghetti', price: 7000, group: 'Menu and Prices', art: '🍝' },
+            { key: 'chicken', name: 'Fried Chicken', price: 8000, group: 'Menu and Prices', art: '🍗' },
+            { key: 'pizza', name: 'Pizza', price: 50000, group: 'Menu and Prices', art: '🍕' },
+            { key: 'grilled-chicken-caesar-salad', name: 'Grilled Chicken Caesar Salad', price: 75342, group: 'Menu and Prices', art: '🥗' },
+            { key: 'classic-club-sandwich', name: 'Classic Club Sandwich', price: 63742, group: 'Menu and Prices', art: '🥪' },
+            { key: 'spinach-feta-stuffed-chicken', name: 'Spinach and Feta Stuffed Chicken', price: 86942, group: 'Menu and Prices', art: '🍗' },
+            { key: 'vegetable-quinoa-bowl', name: 'Vegetable Quinoa Bowl', price: 69542, group: 'Menu and Prices', art: '🥙' },
+            { key: 'bbq-pulled-pork-sandwich', name: 'BBQ Pulled Pork Sandwich', price: 57942, group: 'Menu and Prices', art: '🥪' },
+            { key: 'caprese-panini', name: 'Caprese Panini', price: 52142, group: 'Menu and Prices', art: '🍅' },
+            { key: 'fish-tacos', name: 'Fish Tacos', price: 81142, group: 'Menu and Prices', art: '🌮' },
+            { key: 'mushroom-swiss-burger', name: 'Mushroom and Swiss Burger', price: 75342, group: 'Menu and Prices', art: '🍔' },
+            { key: 'quiche-lorraine', name: 'Quiche Lorraine', price: 63742, group: 'Menu and Prices', art: '🥧' },
+            { key: 'mediterranean-pasta', name: 'Mediterranean Pasta', price: 81142, group: 'Menu and Prices', art: '🍝' },
+            { key: 'asian-chicken-salad', name: 'Asian Chicken Salad', price: 69542, group: 'Menu and Prices', art: '🥗' },
+            { key: 'beef-stir-fry', name: 'Beef Stir-Fry', price: 92742, group: 'Menu and Prices', art: '🥘' },
+            { key: 'margherita-pizza', name: 'Margherita Pizza', price: 86942, group: 'Menu and Prices', art: '🍕' },
+            { key: 'roasted-vegetable-wrap', name: 'Roasted Vegetable Wrap', price: 57942, group: 'Menu and Prices', art: '🌯' },
+            { key: 'soup-of-the-day', name: 'Soup of the Day', price: 34742, group: 'Menu and Prices', art: '🍲' },
+            { key: 'soft-drinks', name: 'Soft Drinks', price: 17342, group: 'Beverages', art: '🥤' },
+            { key: 'iced-tea', name: 'Iced Tea', price: 17342, group: 'Beverages', art: '🧋' },
+            { key: 'fresh-lemonade', name: 'Freshly Squeezed Lemonade', price: 23142, group: 'Beverages', art: '🍋' },
+            { key: 'fruit-smoothies', name: 'Fruit Smoothies', price: 28942, group: 'Beverages', art: '🍓' },
+            { key: 'coffee', name: 'Coffee', price: 17342, group: 'Beverages', art: '☕' },
+            { key: 'hot-tea', name: 'Hot Tea', price: 17342, group: 'Beverages', art: '🍵' },
+            { key: 'bottled-water', name: 'Bottled Water', price: 11542, group: 'Beverages', art: '💧' }
+        ];
+        var tokenStorageKey = 'foodCounterOrderToken';
+        var orderToken = localStorage.getItem(tokenStorageKey);
+        var order = { items: [], total: 0 };
+        var lastPayment = null;
+
+        function createOrderToken() {
+            var bytes = new Uint8Array(32);
+            window.crypto.getRandomValues(bytes);
+            return Array.from(bytes, function (byte) {
+                return byte.toString(16).padStart(2, '0');
+            }).join('');
+        }
+
+        if (!orderToken) {
+            orderToken = createOrderToken();
+            localStorage.setItem(tokenStorageKey, orderToken);
+        }
+
+        var localOrderKey = 'foodCounterOrder:' + orderToken;
+        var offlineModeKey = 'foodCounterOffline:' + orderToken;
+        var offlineMode = localStorage.getItem(offlineModeKey) === '1';
+
+        function formatMoney(cents) {
+            return (cents / 100).toFixed(2);
+        }
+
+        function createFoodArtwork(emoji, index) {
+            var palettes = [
+                ['#284b50', '#55745c'], ['#53433c', '#a66b50'], ['#2d4c56', '#4a7580'],
+                ['#5a443c', '#a66c47'], ['#354b44', '#6d8867'], ['#51443a', '#8d7658']
+            ];
+            var colors = palettes[index % palettes.length];
+            var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 72">' +
+                '<defs><linearGradient id="tile" x1="0" y1="0" x2="1" y2="1"><stop stop-color="' + colors[0] + '"/><stop offset="1" stop-color="' + colors[1] + '"/></linearGradient></defs>' +
+                '<rect width="100" height="72" rx="10" fill="url(%23tile)"/>' +
+                '<circle cx="83" cy="14" r="19" fill="#fff" opacity=".08"/>' +
+                '<circle cx="50" cy="36" r="26" fill="#07121a" opacity=".24"/>' +
+                '<circle cx="48" cy="33" r="25" fill="#fff4df"/>' +
+                '<circle cx="48" cy="33" r="20" fill="#e7d5b9"/>' +
+                '<text x="48" y="47" text-anchor="middle" font-family="Segoe UI Emoji, Apple Color Emoji, sans-serif" font-size="37">' + emoji + '</text>' +
+                '<path d="M10 60h80" stroke="#fff" stroke-opacity=".12" stroke-width="2"/>' +
+                '</svg>';
+            return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+        }
+
+        function renderMenu() {
+            var menuList = document.querySelector('.menu-list');
+            var foodSelect = document.getElementById('food');
+            var groups = Array.from(new Set(menuItems.map(function (item) { return item.group; })));
+
+            groups.forEach(function (groupName) {
+                var group = document.createElement('section');
+                group.className = 'menu-group';
+
+                var heading = document.createElement('h3');
+                heading.className = 'menu-group-title';
+                heading.textContent = groupName;
+                group.appendChild(heading);
+
+                var options = document.createElement('optgroup');
+                options.label = groupName;
+
+                menuItems.filter(function (item) { return item.group === groupName; }).forEach(function (item) {
+                    var row = document.createElement('div');
+                    row.className = 'menu-item';
+
+                    var image = document.createElement('img');
+                    image.className = 'menu-item-image';
+                    image.src = createFoodArtwork(item.art, menuItems.indexOf(item));
+                    image.alt = item.name + ' illustration';
+                    image.width = 100;
+                    image.height = 72;
+
+                    var copy = document.createElement('span');
+                    copy.className = 'menu-item-copy';
+                    var name = document.createElement('strong');
+                    name.textContent = item.name;
+                    var price = document.createElement('b');
+                    price.textContent = '₱' + formatMoney(item.price);
+                    copy.appendChild(name);
+                    row.append(image, copy, price);
+                    group.appendChild(row);
+
+                    var option = document.createElement('option');
+                    option.value = item.key;
+                    option.textContent = item.name + ' · ₱' + formatMoney(item.price);
+                    options.appendChild(option);
+                });
+
+                menuList.appendChild(group);
+                foodSelect.appendChild(options);
+            });
+        }
+
+        function setMessage(text, isError) {
+            var message = document.getElementById('message');
+            message.textContent = text;
+            message.classList.toggle('is-error', Boolean(isError));
+        }
+
+        function setBusy(isBusy) {
+            document.querySelectorAll('.food-page button, .food-page input, .food-page select').forEach(function (control) {
+                control.disabled = isBusy;
+            });
+        }
+
+        function readLocalOrder() {
+            try {
+                var saved = JSON.parse(localStorage.getItem(localOrderKey) || '{"items":[]}');
+                var items = Array.isArray(saved.items) ? saved.items : [];
+                var normalizedItems = items.reduce(function (result, item) {
+                    var menuItem = menuItems.find(function (candidate) { return candidate.key === item.food; });
+                    var quantity = Number(item.quantity);
+                    if (!menuItem || !Number.isInteger(quantity) || quantity < 1 || quantity > 100) {
+                        return result;
+                    }
+                    result.push({
+                        id: item.id || 'local-' + menuItem.key,
+                        food: menuItem.key,
+                        name: menuItem.name,
+                        price: menuItem.price,
+                        quantity: quantity,
+                        subtotal: menuItem.price * quantity
+                    });
+                    return result;
+                }, []);
+                return {
+                    items: normalizedItems,
+                    total: normalizedItems.reduce(function (sum, item) { return sum + item.subtotal; }, 0)
+                };
+            } catch (error) {
+                return { items: [], total: 0 };
+            }
+        }
+
+        function saveLocalOrder() {
+            order.total = order.items.reduce(function (sum, item) { return sum + item.subtotal; }, 0);
+            localStorage.setItem(localOrderKey, JSON.stringify(order));
+        }
+
+        function applyLocalOrderAction(action, details) {
+            details = details || {};
+            if (action === 'load') {
+                order = readLocalOrder();
+            } else if (action === 'add') {
+                var menuItem = menuItems.find(function (item) { return item.key === details.food; });
+                var quantity = Number(details.quantity);
+                if (!menuItem || !Number.isInteger(quantity) || quantity < 1 || quantity > 100) {
+                    throw new Error('Choose a menu item and a quantity from 1 to 100.');
+                }
+                var existingItem = order.items.find(function (item) { return item.food === menuItem.key; });
+                if (existingItem) {
+                    if (existingItem.quantity + quantity > 100) {
+                        throw new Error('A menu item cannot exceed 100 in one order.');
+                    }
+                    existingItem.quantity += quantity;
+                    existingItem.subtotal = existingItem.price * existingItem.quantity;
+                } else {
+                    order.items.push({
+                        id: 'local-' + menuItem.key,
+                        food: menuItem.key,
+                        name: menuItem.name,
+                        price: menuItem.price,
+                        quantity: quantity,
+                        subtotal: menuItem.price * quantity
+                    });
+                }
+            } else if (action === 'update') {
+                var itemToUpdate = order.items.find(function (item) { return String(item.id) === String(details.item_id); });
+                var nextQuantity = Number(details.quantity);
+                if (!itemToUpdate || !Number.isInteger(nextQuantity) || nextQuantity < 1 || nextQuantity > 100) {
+                    throw new Error('Enter a quantity from 1 to 100.');
+                }
+                itemToUpdate.quantity = nextQuantity;
+                itemToUpdate.subtotal = itemToUpdate.price * nextQuantity;
+            } else if (action === 'remove') {
+                order.items = order.items.filter(function (item) { return String(item.id) !== String(details.item_id); });
+            } else if (action === 'clear') {
+                order.items = [];
+            }
+
+            saveLocalOrder();
+            renderOrder();
+            document.getElementById('saveStatus').textContent = 'Saved on this device';
+            document.getElementById('saveStatus').classList.remove('is-error');
+            return { success: true, order: order, offline: true };
+        }
+
+        async function sendOrderAction(action, details) {
+            if (offlineMode) {
+                return applyLocalOrderAction(action, details);
+            }
+
+            var controller = new AbortController();
+            var requestTimeout = window.setTimeout(function () {
+                controller.abort();
+            }, 8000);
+
+            try {
+                var response = await fetch('../api/orders.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(Object.assign({ action: action, token: orderToken }, details || {})),
+                    signal: controller.signal
+                });
+                var result;
+                try {
+                    result = await response.json();
+                } catch (error) {
+                    error.status = response.status || 500;
+                    throw error;
+                }
+                if (!response.ok) {
+                    var responseError = new Error(result.error || 'Could not save your order.');
+                    responseError.status = response.status;
+                    throw responseError;
+                }
+                order = result.order;
+                renderOrder();
+                document.getElementById('saveStatus').textContent = 'Saved to database';
+                document.getElementById('saveStatus').classList.remove('is-error');
+                return result;
+            } catch (error) {
+                if (error.status && error.status >= 400 && error.status < 500 && error.status !== 404) {
+                    throw error;
+                }
+
+                offlineMode = true;
+                localStorage.setItem(offlineModeKey, '1');
+                if (action === 'load') {
+                    order = readLocalOrder();
+                    renderOrder();
+                    document.getElementById('saveStatus').textContent = 'Saved on this device';
+                    document.getElementById('saveStatus').classList.remove('is-error');
+                    return { success: true, order: order, offline: true };
+                }
+
+                saveLocalOrder();
+                return applyLocalOrderAction(action, details);
+            } finally {
+                window.clearTimeout(requestTimeout);
+            }
+        }
+
+        function renderOrder() {
+            var list = document.getElementById('orderList');
+            var empty = document.getElementById('emptyOrder');
+            list.replaceChildren();
+
+            order.items.forEach(function (item) {
+                var row = document.createElement('tr');
+                var nameCell = document.createElement('td');
+                var name = document.createElement('strong');
+                var price = document.createElement('small');
+                name.textContent = item.name;
+                price.textContent = '₱' + formatMoney(item.price) + ' each';
+                nameCell.append(name, price);
+
+                var quantityCell = document.createElement('td');
+                var quantity = document.createElement('input');
+                quantity.type = 'number';
+                quantity.min = '1';
+                quantity.max = '100';
+                quantity.step = '1';
+                quantity.value = item.quantity;
+                quantity.setAttribute('aria-label', item.name + ' quantity');
+                quantity.addEventListener('change', async function () {
+                    var nextQuantity = Number(quantity.value);
+                    if (!Number.isInteger(nextQuantity) || nextQuantity < 1 || nextQuantity > 100) {
+                        setMessage('Enter a whole-number quantity from 1 to 100.', true);
+                        renderOrder();
+                        return;
+                    }
+                    await runOrderAction('update', { item_id: item.id, quantity: nextQuantity });
+                });
+                quantityCell.appendChild(quantity);
+
+                var subtotalCell = document.createElement('td');
+                subtotalCell.className = 'cart-subtotal';
+                subtotalCell.textContent = '₱' + formatMoney(item.subtotal);
+
+                var removeCell = document.createElement('td');
+                var removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.className = 'remove-item';
+                removeButton.setAttribute('aria-label', 'Remove ' + item.name);
+                removeButton.title = 'Remove item';
+                removeButton.textContent = '×';
+                removeButton.addEventListener('click', async function () {
+                    await runOrderAction('remove', { item_id: item.id });
+                });
+                removeCell.appendChild(removeButton);
+                row.append(nameCell, quantityCell, subtotalCell, removeCell);
+                list.appendChild(row);
+            });
+
+            document.getElementById('total').textContent = formatMoney(order.total);
+            empty.hidden = order.items.length > 0;
+            document.querySelector('.cart-table').hidden = order.items.length === 0;
+            resetPayment(true);
+        }
+
+        function resetPayment(clearInput) {
+            lastPayment = null;
+            if (clearInput) {
+                document.getElementById('payment').value = '';
+            }
+            document.getElementById('change').textContent = '0.00';
+        }
+
+        async function runOrderAction(action, details) {
+            setBusy(true);
+            document.getElementById('saveStatus').textContent = 'Saving…';
+            try {
+                await sendOrderAction(action, details);
+                var saveLocation = offlineMode ? ' on this device.' : ' and saved.';
+                setMessage(action === 'add' ? 'Item added' + saveLocation : 'Order updated' + saveLocation);
+            } catch (error) {
+                document.getElementById('saveStatus').textContent = 'Not saved';
+                document.getElementById('saveStatus').classList.add('is-error');
+                setMessage(error.message, true);
+            } finally {
+                setBusy(false);
+            }
+        }
+
+        document.getElementById('orderForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            var quantity = Number(document.getElementById('quantity').value);
+            if (!Number.isInteger(quantity) || quantity < 1 || quantity > 100) {
+                setMessage('Enter a whole-number quantity from 1 to 100.', true);
+                return;
+            }
+            await runOrderAction('add', {
+                food: document.getElementById('food').value,
+                quantity: quantity
+            });
+            document.getElementById('quantity').value = '1';
+        });
+
+        document.getElementById('changeButton').addEventListener('click', function () {
+            var payment = Number(document.getElementById('payment').value);
+            if (order.total <= 0) {
+                setMessage('Add an item before calculating payment.', true);
+                return;
+            }
+            if (!Number.isFinite(payment) || payment < 0 || !/^\d+(\.\d{1,2})?$/.test(document.getElementById('payment').value)) {
+                setMessage('Enter a valid cash amount with up to two decimal places.', true);
+                return;
+            }
+            lastPayment = Math.round(payment * 100);
+            if (lastPayment < order.total) {
+                lastPayment = null;
+                setMessage('Insufficient cash. Add ₱' + formatMoney(order.total - Math.round(payment * 100)) + '.', true);
+                return;
+            }
+            document.getElementById('change').textContent = formatMoney(lastPayment - order.total);
+            setMessage('Payment is sufficient. Ready to print.');
+        });
+
+        document.getElementById('payment').addEventListener('input', function () {
+            resetPayment(false);
+            setMessage('');
+        });
+
+        document.getElementById('clearButton').addEventListener('click', async function () {
+            await runOrderAction('clear');
+        });
+
+        function prepareReceipt() {
+            document.getElementById('receiptDate').textContent = new Date().toLocaleString('en-PH');
+            var receiptItems = document.getElementById('receiptItems');
+            receiptItems.replaceChildren();
+            order.items.forEach(function (item) {
+                var itemBox = document.createElement('div');
+                itemBox.className = 'receipt-item';
+                var name = document.createElement('p');
+                name.textContent = item.name;
+                var details = document.createElement('div');
+                details.className = 'receipt-row';
+                var quantityPrice = document.createElement('span');
+                quantityPrice.textContent = item.quantity + ' x ' + formatMoney(item.price);
+                var subtotal = document.createElement('span');
+                subtotal.textContent = formatMoney(item.subtotal);
+                details.append(quantityPrice, subtotal);
+                itemBox.append(name, details);
+                receiptItems.appendChild(itemBox);
+            });
+            document.getElementById('receiptTotal').textContent = 'PHP ' + formatMoney(order.total);
+            document.getElementById('receiptPayment').textContent = 'PHP ' + formatMoney(lastPayment);
+            document.getElementById('receiptChange').textContent = 'PHP ' + formatMoney(lastPayment - order.total);
+            document.getElementById('paperSize').textContent = '@page { size: 85.6mm 53.98mm; margin: 0; }';
+        }
+
+        document.getElementById('printButton').addEventListener('click', function () {
+            if (lastPayment === null) {
+                setMessage('Calculate a sufficient payment before printing.', true);
+                return;
+            }
+            prepareReceipt();
+            window.print();
+        });
+
+        renderMenu();
+        document.getElementById('saveStatus').textContent = offlineMode ? 'Saved on this device' : 'Connecting…';
+        setBusy(true);
+        sendOrderAction('load').catch(function (error) {
+            document.getElementById('saveStatus').textContent = 'Database unavailable';
+            document.getElementById('saveStatus').classList.add('is-error');
+            setMessage(error.message + ' Start the PHP server and import database.sql to save orders.', true);
+        }).finally(function () {
+            setBusy(false);
+        });
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/navigation.js"></script>
+    <script src="../js/dark-mode.js"></script>
+</body>
+</html>

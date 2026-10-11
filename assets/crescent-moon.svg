@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <defs>
+        <radialGradient id="moonlight" cx="35%" cy="32%" r="75%">
+            <stop stop-color="#fffdf0"/>
+            <stop offset=".6" stop-color="#f4efd8"/>
+            <stop offset="1" stop-color="#d9d3b5"/>
+        </radialGradient>
+    </defs>
+    <path fill="url(#moonlight)" fill-rule="evenodd" d="M50 2a48 48 0 1 0 0 96 48 48 0 1 0 0-96ZM62 14a36 36 0 1 0 0 72 36 36 0 1 0 0-72Z"/>
+    <g fill="#a09673" fill-opacity=".28">
+        <circle cx="22" cy="29" r="6"/>
+        <circle cx="18" cy="53" r="4"/>
+        <circle cx="25" cy="72" r="5"/>
+    </g>
+</svg>

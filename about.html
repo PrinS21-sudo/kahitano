@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About Prince Kyle G. Basco, a computer engineering student and game developer.">
+    <title>About | Prince Kyle G. Basco</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/game-style.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/portfolio.css">
+    <link rel="stylesheet" href="css/nav-bloom.css">
+    <link rel="stylesheet" href="css/about-book.css">
+</head>
+<body class="portfolio-page">
+    <button class="theme-fab" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="sun-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="moon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+    <header class="header portfolio-page-header portfolio-site-header">
+        <a href="index.html#home" class="logo" aria-label="Prince Kyle G. Basco home"><svg class="logo-flower" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 18C16 10 10 8 7 11C4 14 6 20 14 22C7 24 5 30 8 33C11 36 17 33 20 26C23 33 29 36 32 33C35 30 33 24 26 22C34 20 36 14 33 11C30 8 24 10 20 18Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="20" cy="22" r="2.5" fill="currentColor"/></svg><span>PRINS</span></a>
+        <nav class="main-nav" aria-label="Main navigation"><a href="index.html#home" class="nav-link">Home</a><a href="games.html" class="nav-link">Games</a><a href="about.html" class="nav-link active">About</a></nav>
+        <div class="header-right"><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu"><i data-lucide="menu"></i></button></div>
+    </header>
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true"><button class="mobile-menu-close" id="menuClose" type="button" aria-label="Close menu"><i data-lucide="x"></i></button><nav aria-label="Mobile navigation"><a href="index.html#home">Home</a><a href="games.html">Games</a><a href="about.html">About</a></nav></div>
+
+    <main class="portfolio-page-main portfolio-about-page">
+        <section class="about-profile" aria-label="About Prince Kyle Basco">
+            <div class="about-profile-photo" aria-label="Photo placeholder">
+                <span>PK</span>
+                <small>YOUR PHOTO</small>
+            </div>
+            <div class="about-profile-copy">
+                <h1>Prince Kyle <em>Basco</em></h1>
+                <p class="about-profile-role">Computer Engineering Student <span aria-hidden="true">·</span> BSCpE2A</p>
+                <p class="portfolio-about-lead">I’m a student developer exploring the space where technology, problem-solving, and creativity meet. This site is a home for the games and interactive projects I build while learning.</p>
+                <a href="games.html" class="about-explore-link">Explore my games <i data-lucide="arrow-up-right"></i></a>
+            </div>
+        </section>
+        <section class="pb" aria-label="About me, interactive book">
+            <div class="pb-head">
+                <h2>A little more <em>about me</em></h2>
+                <p id="pbHint" aria-live="polite">Click the book to open it.</p>
+            </div>
+            <div class="pb-stage" id="pbStage" tabindex="0" aria-label="Interactive book. Use the left and right arrow keys to turn pages.">
+                <div class="pb-fit"><div class="pb-scene"><div class="pb-table">
+                    <div class="pb-desk"></div>
+                    <div class="pb-book" id="pbBook"><div class="pb-shadow"></div></div>
+                </div></div></div>
+            </div>
+        </section>
+        <section class="portfolio-details" aria-label="Portfolio details">
+            <article class="portfolio-block" data-rev><h2>Color Game Ni Prins</h2><p>A small collection of browser games made as a web development project. Each one is designed to be quick to pick up and fun to replay.</p></article>
+            <article class="portfolio-block" data-rev style="--d:100ms"><ul class="portfolio-games"><li><a href="games/color.html">Color Game <span>Find the different-colored tile</span></a></li><li><a href="quiz.html">Quiz Game <span>Put your knowledge to the test</span></a></li><li><a href="games/flappy-bird.html">Flappy Bird <span>A quick arcade challenge</span></a></li><li><a href="games/food-ordering.html">Food Counter <span>Build an order and print a receipt</span></a></li></ul></article>
+            <article class="portfolio-block portfolio-tools" data-rev style="--d:200ms">
+                <ul class="portfolio-tech-list" aria-label="Technologies used">
+                    <li>
+                        <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-html" aria-expanded="false" aria-controls="tech-use-html">HTML</button>
+                        <span class="portfolio-tech-use" id="tech-use-html" role="tooltip">Structures the pages and content of the portfolio and games.</span>
+                    </li>
+                    <li>
+                        <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-css" aria-expanded="false" aria-controls="tech-use-css">CSS</button>
+                        <span class="portfolio-tech-use" id="tech-use-css" role="tooltip">Styles the layouts, colors, and responsive page designs.</span>
+                    </li>
+                    <li>
+                        <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-javascript" aria-expanded="false" aria-controls="tech-use-javascript">JavaScript</button>
+                        <span class="portfolio-tech-use" id="tech-use-javascript" role="tooltip">Powers game logic, page interactions, and the animated book.</span>
+                    </li>
+                    <li>
+                        <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-php" aria-expanded="false" aria-controls="tech-use-php">PHP</button>
+                        <span class="portfolio-tech-use" id="tech-use-php" role="tooltip">Handles server requests for food orders and leaderboard scores.</span>
+                    </li>
+                    <li>
+                        <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-mysql" aria-expanded="false" aria-controls="tech-use-mysql">MySQL</button>
+                        <span class="portfolio-tech-use" id="tech-use-mysql" role="tooltip">Stores food orders and leaderboard scores for the PHP endpoints.</span>
+                    </li>
+                </ul>
+            </article>
+        </section>
+        <a href="index.html#home" class="portfolio-back-link">← Back home</a>
+    </main>
+    <footer class="portfolio-simple-footer"><span>PRINS / 2026</span><span>Made while learning</span></footer>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/dark-mode.js"></script>
+    <script src="js/nav-bloom.js"></script>
+    <script src="js/about-book.js"></script>
+    <script src="js/about-tech.js"></script>
+</body>
+</html>

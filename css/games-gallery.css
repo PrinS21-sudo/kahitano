@@ -1,0 +1,240 @@
+.portfolio-games-page {
+    --games-surface: rgba(255, 255, 252, .84);
+    --games-surface-hover: #fff;
+    --games-copy: #52534f;
+    --games-border: rgba(24, 28, 22, .1);
+}
+
+body.portfolio-page:has(.portfolio-games-page) .theme-fab {
+    z-index: 92;
+}
+
+body.dark-mode .portfolio-games-page {
+    --games-surface: rgba(15, 21, 55, .78);
+    --games-surface-hover: rgba(22, 29, 69, .92);
+    --games-copy: #c3c9e1;
+    --games-border: rgba(224, 230, 255, .14);
+}
+
+.portfolio-games-page .portfolio-page-heading {
+    max-width: 760px;
+    margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.portfolio-games-page .portfolio-page-heading h1 {
+    max-width: 720px;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(2.8rem, 6.5vw, 5.6rem);
+    font-weight: 400;
+    letter-spacing: -.065em;
+    line-height: .98;
+}
+
+.portfolio-games-page .portfolio-page-heading h1 em {
+    font-style: normal;
+    font-weight: 500;
+}
+
+.portfolio-games-page .portfolio-page-heading > p {
+    max-width: 540px;
+    color: var(--games-copy);
+    font-size: 1rem;
+    line-height: 1.75;
+    opacity: 1;
+}
+
+.portfolio-games-page .portfolio-game-grid {
+    max-width: none;
+    margin: 0;
+    gap: 1rem;
+    border: 0;
+    background: transparent;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.portfolio-games-page .portfolio-game-card {
+    --game-accent: #6078c8;
+    position: relative;
+    isolation: isolate;
+    min-height: 340px;
+    padding: clamp(1.6rem, 3.2vw, 2.8rem);
+    overflow: hidden;
+    border: 1px solid var(--games-border);
+    border-radius: 18px;
+    background:
+        radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--game-accent) 12%, transparent), transparent 55%),
+        var(--games-surface);
+    box-shadow: 0 10px 34px rgba(50, 58, 90, .045);
+    color: var(--ink);
+    transition:
+        background-color .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease,
+        transform .35s var(--ease);
+    animation: game-card-enter .65s var(--ease) both;
+    animation-delay: var(--d, 0ms);
+}
+
+.portfolio-games-page .game-card--color {
+    --game-accent: #617bd4;
+}
+
+.portfolio-games-page .game-card--quiz {
+    --game-accent: #c1784f;
+}
+
+.portfolio-games-page .game-card--flappy {
+    --game-accent: #4c9bab;
+}
+
+.portfolio-games-page .game-card--food {
+    --game-accent: #718f66;
+}
+
+.portfolio-games-page .portfolio-game-card::before {
+    content: none;
+}
+
+.portfolio-games-page .game-card-art {
+    position: absolute;
+    z-index: -1;
+    top: -.34em;
+    right: .04em;
+    color: color-mix(in srgb, var(--game-accent) 12%, transparent);
+    font-family: Arial, sans-serif;
+    font-size: clamp(9rem, 19vw, 17rem);
+    font-weight: 400;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-12deg) scale(.94);
+    transition: color .35s ease, transform .55s var(--ease);
+}
+
+.portfolio-games-page .game-card--quiz .game-card-art {
+    top: -.2em;
+    right: .1em;
+    transform: rotate(-14deg) scale(.92);
+}
+
+.portfolio-games-page .game-card--flappy .game-card-art {
+    top: -.24em;
+    right: .12em;
+    transform: rotate(-10deg) scale(.95);
+}
+
+.portfolio-games-page .game-card--food .game-card-art {
+    top: -.21em;
+    right: .1em;
+    transform: rotate(0) scale(.9);
+}
+
+.portfolio-games-page .portfolio-game-card:hover,
+.portfolio-games-page .portfolio-game-card:focus-visible {
+    border-color: color-mix(in srgb, var(--game-accent) 45%, var(--games-border));
+    background-color: var(--games-surface-hover);
+    box-shadow: 0 18px 42px rgba(50, 58, 90, .12);
+    transform: translateY(-5px);
+}
+
+.portfolio-games-page .portfolio-game-card:hover .game-card-art,
+.portfolio-games-page .portfolio-game-card:focus-visible .game-card-art {
+    color: color-mix(in srgb, var(--game-accent) 19%, transparent);
+    transform: rotate(-5deg) scale(1.02);
+}
+
+.portfolio-games-page .portfolio-game-icon {
+    z-index: 0;
+    width: 44px;
+    height: 44px;
+    margin: 0 0 auto;
+    border-color: color-mix(in srgb, var(--game-accent) 42%, transparent);
+    background: color-mix(in srgb, var(--game-accent) 12%, var(--games-surface));
+    color: var(--game-accent);
+    font-size: 1.2rem;
+}
+
+.portfolio-games-page .portfolio-game-card:hover .portfolio-game-icon,
+.portfolio-games-page .portfolio-game-card:focus-visible .portfolio-game-icon {
+    background: color-mix(in srgb, var(--game-accent) 20%, var(--games-surface));
+    transform: rotate(8deg) scale(1.06);
+}
+
+.portfolio-games-page .portfolio-game-card h2 {
+    z-index: 0;
+    margin: 2.2rem 0 .7rem;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1.55rem, 2.6vw, 2.1rem);
+    font-weight: 500;
+    letter-spacing: -.045em;
+}
+
+.portfolio-games-page .portfolio-game-card p {
+    z-index: 0;
+    max-width: 370px;
+    margin: 0 0 1.7rem;
+    color: var(--games-copy);
+    font-size: .94rem;
+    line-height: 1.7;
+    opacity: 1;
+}
+
+.portfolio-games-page .portfolio-game-link {
+    z-index: 0;
+    color: var(--game-accent);
+    font-weight: 500;
+    letter-spacing: .08em;
+}
+
+.portfolio-games-page .portfolio-game-link span {
+    display: inline-block;
+    transition: transform .3s var(--ease);
+}
+
+.portfolio-games-page .portfolio-game-card:hover .portfolio-game-link span,
+.portfolio-games-page .portfolio-game-card:focus-visible .portfolio-game-link span {
+    transform: translate(3px, -3px);
+}
+
+.portfolio-games-page .portfolio-game-card:focus-visible {
+    outline: 2px solid var(--game-accent);
+    outline-offset: 4px;
+}
+
+@keyframes game-card-enter {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .portfolio-games-page .portfolio-game-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-games-page .portfolio-game-card {
+        min-height: 300px;
+    }
+
+    .portfolio-games-page .game-card-art {
+        font-size: clamp(10rem, 40vw, 15rem);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .portfolio-games-page .portfolio-game-card {
+        animation: none;
+        transition: none;
+    }
+
+    .portfolio-games-page .game-card-art,
+    .portfolio-games-page .portfolio-game-icon,
+    .portfolio-games-page .portfolio-game-link span {
+        transition: none;
+    }
+}

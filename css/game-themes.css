@@ -1,0 +1,826 @@
+body.color-game-page,
+body.quiz-page,
+body.flappy-page,
+body.food-page {
+    --paper: var(--game-bg);
+    --paper-2: var(--game-surface);
+    --ink: var(--game-text);
+    --line: var(--game-border);
+    --pink: var(--game-accent);
+    --primary: var(--game-accent);
+    --ease: cubic-bezier(.16, 1, .3, 1);
+    min-height: 100vh;
+    background: var(--game-bg) !important;
+    color: var(--game-text) !important;
+    transition: background-color .35s ease, color .35s ease;
+}
+
+html:has(body.color-game-page),
+html:has(body.quiz-page),
+html:has(body.flappy-page),
+html:has(body.food-page) {
+    background: var(--game-bg);
+}
+
+html:has(body.color-game-page) {
+    background: #edf5f2;
+}
+
+html:has(body.dark-mode.color-game-page) {
+    background: #070a1c;
+}
+
+html:has(body.quiz-page) {
+    background: #f5f1e8;
+}
+
+html:has(body.dark-mode.quiz-page) {
+    background: #070a1c;
+}
+
+html:has(body.flappy-page) {
+    background: #e5f3f4;
+}
+
+html:has(body.dark-mode.flappy-page) {
+    background: #070a1c;
+}
+
+html:has(body.food-page) {
+    background: #f3f4ed;
+}
+
+html:has(body.dark-mode.food-page) {
+    background: #070a1c;
+}
+
+body.color-game-page {
+    --game-bg: #edf5f2;
+    --game-surface: #ffffff;
+    --game-raised: #f5f9f7;
+    --game-text: #18352e;
+    --game-muted: #59736b;
+    --game-border: rgba(24, 74, 61, .16);
+    --game-accent: #16816d;
+    --game-button-text: #ffffff;
+}
+
+body.color-game-page.dark-mode {
+    --game-bg: #070a1c;
+    --game-surface: rgba(11, 16, 48, .88);
+    --game-raised: rgba(20, 26, 69, .88);
+    --game-text: #eef0ff;
+    --game-muted: #b8c0df;
+    --game-border: rgba(211, 220, 255, .2);
+    --game-accent: #c4cbff;
+    --game-button-text: #101536;
+}
+
+body.quiz-page {
+    --game-bg: #f5f1e8;
+    --game-surface: #fffdf8;
+    --game-raised: #f7f2e7;
+    --game-text: #33291d;
+    --game-muted: #6c5d4b;
+    --game-border: rgba(94, 68, 39, .18);
+    --game-accent: #a35e24;
+    --game-button-text: #ffffff;
+}
+
+body.quiz-page.dark-mode {
+    --game-bg: #070a1c;
+    --game-surface: rgba(11, 16, 48, .88);
+    --game-raised: rgba(20, 26, 69, .88);
+    --game-text: #eef0ff;
+    --game-muted: #b8c0df;
+    --game-border: rgba(211, 220, 255, .2);
+    --game-accent: #c4cbff;
+    --game-button-text: #101536;
+}
+
+body.flappy-page {
+    --game-bg: #e5f3f4;
+    --game-surface: #f9ffff;
+    --game-raised: #d2e9eb;
+    --game-text: #173740;
+    --game-muted: #4f7078;
+    --game-border: rgba(30, 91, 102, .2);
+    --game-accent: #287c87;
+    --game-button-text: #ffffff;
+}
+
+body.flappy-page.dark-mode {
+    --game-bg: #070a1c;
+    --game-surface: rgba(11, 16, 48, .88);
+    --game-raised: rgba(20, 26, 69, .88);
+    --game-text: #eef0ff;
+    --game-muted: #b8c0df;
+    --game-border: rgba(211, 220, 255, .2);
+    --game-accent: #c4cbff;
+    --game-button-text: #101536;
+}
+
+body.food-page {
+    --game-bg: #f3f4ed;
+    --game-surface: #fffefa;
+    --game-raised: #f6f7f0;
+    --game-text: #29372a;
+    --game-muted: #667263;
+    --game-border: rgba(54, 81, 49, .18);
+    --game-accent: #527a43;
+    --game-button-text: #ffffff;
+}
+
+body.food-page.dark-mode {
+    --game-bg: #070a1c;
+    --game-surface: rgba(11, 16, 48, .88);
+    --game-raised: rgba(20, 26, 69, .88);
+    --game-text: #eef0ff;
+    --game-muted: #b8c0df;
+    --game-border: rgba(211, 220, 255, .2);
+    --game-accent: #c4cbff;
+    --game-button-text: #101536;
+}
+
+body.color-game-page.dark-mode,
+body.quiz-page.dark-mode,
+body.flappy-page.dark-mode,
+body.food-page.dark-mode {
+    background: linear-gradient(180deg, #0b1034 0%, #070a1c 55%, #04050f 100%) fixed !important;
+}
+
+body:is(.color-game-page, .quiz-page, .flappy-page, .food-page):not(.dark-mode) .night-stars--page {
+    display: none;
+}
+
+body.dark-mode:is(.color-game-page, .quiz-page, .flappy-page, .food-page) .night-stars--page {
+    display: block;
+}
+
+body.mini-game-page .theme-fab,
+body.quiz-page .theme-fab {
+    z-index: 92;
+}
+
+body.color-game-page > .container {
+    width: min(860px, calc(100% - 40px));
+    min-height: 0;
+    padding: 126px 0 56px;
+}
+
+body.mini-game-page.running.color-game-page .game-title {
+    margin-bottom: 1.25rem;
+    color: var(--game-text) !important;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 500;
+    letter-spacing: -.06em;
+}
+
+body.color-game-page .game-title span {
+    margin-top: .45rem;
+    color: var(--game-muted) !important;
+    font-size: .82rem;
+    font-weight: 400;
+    letter-spacing: .04em;
+}
+
+body.color-game-page #message {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 1rem;
+    padding: .65rem 1rem;
+    border: 1px solid var(--game-border);
+    border-radius: 999px;
+    background: var(--game-surface);
+    color: var(--game-muted);
+    font-size: .88rem;
+}
+
+body.color-game-page .player-panel,
+body.color-game-page .scoreboard,
+body.color-game-page .leaderboard {
+    border: 1px solid var(--game-border) !important;
+    border-radius: 14px !important;
+    background: var(--game-surface) !important;
+    box-shadow: 0 12px 34px rgba(28, 73, 57, .06) !important;
+    color: var(--game-text) !important;
+}
+
+body.color-game-page .player-panel {
+    max-width: 480px;
+}
+
+body.color-game-page .player-panel label,
+body.color-game-page .difficulty-panel label,
+body.color-game-page .leaderboard li,
+body.color-game-page .leaderboard-heading,
+body.color-game-page #leaderboard-title {
+    color: var(--game-text) !important;
+}
+
+body.color-game-page .player-status,
+body.color-game-page #leaderboard-difficulty,
+body.color-game-page .empty-leaderboard {
+    color: var(--game-muted) !important;
+}
+
+body.color-game-page .player-status.is-success {
+    color: var(--game-accent) !important;
+}
+
+body.color-game-page .player-status.is-error,
+body.color-game-page.timer-ending .timer-stat strong {
+    color: #a33d42 !important;
+}
+
+body.color-game-page.dark-mode .player-status.is-error,
+body.color-game-page.dark-mode.timer-ending .timer-stat strong {
+    color: #ff9a9a !important;
+}
+
+body.color-game-page .score-stat {
+    border-radius: 10px !important;
+    background: var(--game-raised) !important;
+}
+
+body.color-game-page .score-stat span {
+    color: var(--game-muted) !important;
+}
+
+body.color-game-page .score-stat strong,
+body.color-game-page .timer-stat strong,
+body.color-game-page.running #leaderboard-title,
+body.color-game-page.running .game-title span {
+    color: var(--game-accent) !important;
+}
+
+body.color-game-page .player-panel input,
+body.color-game-page .difficulty-panel select {
+    border: 1px solid var(--game-border) !important;
+    border-radius: 9px !important;
+    background: var(--game-raised) !important;
+    color: var(--game-text) !important;
+}
+
+body.color-game-page .player-panel input::placeholder {
+    color: var(--game-muted);
+    opacity: .8;
+}
+
+body.color-game-page #game-board {
+    border: 4px solid var(--game-accent) !important;
+    border-radius: 18px !important;
+    background: color-mix(in srgb, var(--game-accent) 8%, var(--game-surface)) !important;
+    box-shadow: 0 12px 34px color-mix(in srgb, var(--game-accent) 18%, transparent) !important;
+}
+
+body.color-game-page #game-board .box {
+    border: 2px solid color-mix(in srgb, var(--game-accent) 45%, transparent) !important;
+    border-radius: 11px !important;
+    box-shadow: inset 0 1px 5px rgba(255, 255, 255, .24);
+}
+
+body.color-game-page .leaderboard li {
+    border-left-color: var(--game-accent) !important;
+    border-radius: 8px !important;
+    background: var(--game-raised) !important;
+}
+
+body.color-game-page .leaderboard .current-player {
+    border-left-color: var(--game-accent) !important;
+}
+
+body.color-game-page .mini-game-page button,
+body.color-game-page button:not(.theme-fab):not(.menu-toggle):not(.mobile-menu-close) {
+    border: 1px solid var(--game-accent) !important;
+    border-radius: 10px !important;
+    background: var(--game-accent) !important;
+    color: var(--game-button-text) !important;
+}
+
+body.color-game-page button:focus-visible,
+body.color-game-page input:focus-visible,
+body.color-game-page select:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--game-accent) 50%, transparent);
+    outline-offset: 2px;
+}
+
+body.quiz-page {
+    background-image:
+        radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--game-accent) 10%, transparent), transparent 36%),
+        linear-gradient(180deg, var(--game-bg), color-mix(in srgb, var(--game-bg) 87%, var(--game-raised))) !important;
+}
+
+body.quiz-page .quiz-main {
+    width: min(980px, calc(100% - 40px));
+    padding-top: 126px;
+}
+
+body.quiz-page .quiz-heading {
+    margin-bottom: 2rem;
+}
+
+body.quiz-page .quiz-heading h1 {
+    max-width: 760px;
+    margin: .7rem 0 1rem;
+    color: var(--game-text);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(2.7rem, 6.5vw, 5rem);
+    font-weight: 500;
+    letter-spacing: -.065em;
+    line-height: 1;
+}
+
+body.quiz-page .quiz-heading h1 em {
+    color: var(--game-accent);
+    font-style: normal;
+}
+
+body.quiz-page .quiz-heading > p,
+body.quiz-page .quiz-start > p {
+    color: var(--game-muted);
+    opacity: 1;
+}
+
+body.quiz-page .quiz-panel {
+    padding: clamp(1.2rem, 4vw, 2.5rem);
+    border: 1px solid var(--game-border);
+    border-radius: 18px;
+    background: var(--game-surface);
+    box-shadow: 0 16px 44px rgba(80, 56, 24, .07);
+    color: var(--game-text);
+}
+
+body.quiz-page .quiz-start > p {
+    margin-bottom: 1.4rem;
+}
+
+body.quiz-page .student-fields label {
+    color: var(--game-text);
+}
+
+body.quiz-page .student-fields input,
+body.quiz-page .quiz-table-wrap input {
+    border: 1px solid var(--game-border);
+    border-radius: 9px;
+    background: var(--game-raised);
+    color: var(--game-text);
+}
+
+body.quiz-page input::placeholder {
+    color: var(--game-muted);
+    opacity: .85;
+}
+
+body.quiz-page .quiz-status {
+    padding: .9rem 1rem;
+    border: 1px solid var(--game-border);
+    border-radius: 10px;
+    background: var(--game-raised);
+    color: var(--game-text);
+}
+
+body.quiz-page .quiz-status .timer,
+body.quiz-page .quiz-status .progress {
+    color: var(--game-accent);
+    font-weight: 600;
+}
+
+body.quiz-page .quiz-table-wrap {
+    border: 1px solid var(--game-border);
+    border-radius: 10px;
+    background: var(--game-surface);
+}
+
+body.quiz-page .quiz-table-wrap th,
+body.quiz-page .quiz-table-wrap td {
+    border-bottom-color: var(--game-border);
+    color: var(--game-text);
+}
+
+body.quiz-page .quiz-table-wrap th {
+    background: color-mix(in srgb, var(--game-accent) 10%, var(--game-raised));
+    color: var(--game-accent);
+}
+
+body.quiz-page .quiz-table-wrap td.correct {
+    color: #28744e;
+}
+
+body.quiz-page.dark-mode .quiz-table-wrap td.correct {
+    color: #8cdaa9;
+}
+
+body.quiz-page .quiz-table-wrap td.wrong {
+    color: #a33945;
+}
+
+body.quiz-page.dark-mode .quiz-table-wrap td.wrong {
+    color: #ff9d9d;
+}
+
+body.quiz-page #result h2,
+body.quiz-page #result h3 {
+    color: var(--game-text);
+}
+
+body.quiz-page .quiz-panel button {
+    min-height: 46px;
+    padding: .8rem 1.25rem;
+    border: 1px solid var(--game-accent);
+    border-radius: 10px;
+    background: var(--game-accent);
+    color: var(--game-button-text);
+    font-weight: 600;
+    transition: transform .2s ease, filter .2s ease;
+}
+
+body.quiz-page .quiz-panel button:hover {
+    filter: brightness(.94);
+    transform: translateY(-2px);
+}
+
+body.quiz-page :is(input, button, a):focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--game-accent) 55%, transparent);
+    outline-offset: 3px;
+}
+
+body.flappy-page {
+    display: block !important;
+    background-image:
+        radial-gradient(ellipse at 10% 0%, color-mix(in srgb, var(--game-accent) 13%, transparent), transparent 42%),
+        linear-gradient(180deg, var(--game-bg), color-mix(in srgb, var(--game-bg) 82%, var(--game-raised))) !important;
+}
+
+body.flappy-page.dark-mode {
+    background-image:
+        radial-gradient(ellipse at 12% 0%, rgba(142, 155, 255, .14), transparent 42%),
+        linear-gradient(180deg, #0b1034, #070a1c) !important;
+}
+
+body.flappy-page .page-shell {
+    padding: 116px 16px 56px;
+    justify-content: flex-start;
+    gap: .85rem;
+}
+
+body.flappy-page .container {
+    width: min(680px, 100%);
+    text-align: center;
+}
+
+body.flappy-page h1 {
+    margin: 0 0 1.2rem;
+    color: var(--game-text) !important;
+    -webkit-text-fill-color: var(--game-text) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: clamp(2.7rem, 7vw, 4.5rem);
+    font-weight: 500;
+    letter-spacing: -.065em;
+    text-shadow: none !important;
+}
+
+body.flappy-page .player-panel,
+body.flappy-page .leaderboard {
+    width: min(420px, 100%);
+    border: 1px solid var(--game-border) !important;
+    border-radius: 14px !important;
+    background: var(--game-surface) !important;
+    box-shadow: 0 12px 34px rgba(28, 65, 82, .08) !important;
+    color: var(--game-text) !important;
+}
+
+body.flappy-page .player-panel label,
+body.flappy-page .leaderboard h3,
+body.flappy-page .leaderboard li,
+body.flappy-page .instructions,
+body.flappy-page .difficulty-control label {
+    color: var(--game-text) !important;
+}
+
+body.flappy-page input,
+body.flappy-page select {
+    border: 1px solid var(--game-border) !important;
+    border-radius: 9px !important;
+    background: var(--game-raised) !important;
+    color: var(--game-text) !important;
+}
+
+body.flappy-page input::placeholder {
+    color: var(--game-muted);
+}
+
+body.flappy-page .difficulty-control select {
+    background: var(--game-raised) !important;
+}
+
+body.flappy-page #game {
+    width: min(400px, calc(100vw - 36px));
+    height: min(600px, 68dvh);
+    min-height: 400px;
+    border: 4px solid color-mix(in srgb, var(--game-accent) 65%, var(--game-border)) !important;
+    border-radius: 16px !important;
+    background:
+        radial-gradient(circle at 18% 24%, color-mix(in srgb, var(--game-accent) 35%, transparent) 0 1px, transparent 2px),
+        radial-gradient(circle at 72% 15%, color-mix(in srgb, var(--game-accent) 30%, transparent) 0 1px, transparent 2px),
+        radial-gradient(circle at 83% 72%, color-mix(in srgb, var(--game-accent) 25%, transparent) 0 1px, transparent 2px),
+        linear-gradient(180deg, #a8dce0 0%, #d5f0e8 70%, #b8dfd5 100%) !important;
+    box-shadow: 0 18px 46px rgba(38, 91, 98, .16), inset 0 -30px 0 rgba(102, 153, 112, .12) !important;
+}
+
+body.flappy-page.dark-mode #game {
+    background:
+        radial-gradient(circle at 18% 24%, rgba(236, 246, 255, .9) 0 1px, transparent 2px),
+        radial-gradient(circle at 72% 15%, rgba(196, 203, 255, .85) 0 1px, transparent 2px),
+        radial-gradient(circle at 83% 72%, rgba(255, 255, 255, .75) 0 1px, transparent 2px),
+        linear-gradient(145deg, #101536 0%, #171d48 48%, #0b1034 100%) !important;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, .24), inset 0 -28px 0 rgba(142, 155, 255, .08) !important;
+}
+
+body.flappy-page #bird {
+    background: linear-gradient(180deg, #fff2a9 0%, #f4c64c 58%, #da912c 100%) !important;
+    border-color: #fff4c3 !important;
+    box-shadow: 0 5px 12px rgba(80, 67, 37, .24) !important;
+}
+
+body.flappy-page #bird::before {
+    background: linear-gradient(90deg, #e7a83a, #fff0b2, #dfa044) !important;
+    border-color: rgba(255, 255, 255, .75) !important;
+}
+
+body.flappy-page .pipe {
+    background: linear-gradient(90deg, #397f61, #79bd79 28%, #4b9c69 64%, #27684f) !important;
+    border-color: #c8f0a5 !important;
+    border-radius: 8px !important;
+    box-shadow: inset -10px 0 0 rgba(20, 76, 45, .2), inset 8px 0 0 rgba(255, 255, 255, .18) !important;
+}
+
+body.flappy-page.dark-mode .pipe {
+    background: linear-gradient(90deg, #505b9d, #aeb8ff 28%, #7582ce 64%, #404a86) !important;
+    border-color: #d4d9ff !important;
+}
+
+body.flappy-page .pipe::before {
+    background: linear-gradient(180deg, #a2d98a, #4c9866) !important;
+    border-color: #c8f0a5 !important;
+    border-radius: 6px !important;
+}
+
+body.flappy-page #score {
+    color: #ffffff !important;
+    text-shadow: 0 2px 5px rgba(18, 54, 51, .55) !important;
+}
+
+body.flappy-page #message {
+    border: 1px solid var(--game-border) !important;
+    border-radius: 14px !important;
+    background: color-mix(in srgb, var(--game-surface) 94%, transparent) !important;
+    color: var(--game-text) !important;
+    box-shadow: 0 16px 34px rgba(25, 55, 62, .18) !important;
+    backdrop-filter: blur(10px);
+}
+
+body.flappy-page #message h2 {
+    color: var(--game-text);
+}
+
+body.flappy-page #message p {
+    color: var(--game-muted);
+}
+
+body.flappy-page button:not(.theme-fab):not(.menu-toggle):not(.mobile-menu-close) {
+    border: 1px solid var(--game-accent) !important;
+    border-radius: 10px !important;
+    background: var(--game-accent) !important;
+    color: var(--game-button-text) !important;
+    box-shadow: none !important;
+}
+
+body.flappy-page .instructions {
+    color: var(--game-muted) !important;
+    font-size: .78rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+body.flappy-page .leaderboard li {
+    border-bottom: 1px solid var(--game-border);
+    color: var(--game-text) !important;
+}
+
+body.flappy-page :is(input, select, button):focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--game-accent) 50%, transparent);
+    outline-offset: 3px;
+}
+
+body.food-page .food-main {
+    width: min(1120px, calc(100% - 44px));
+    padding: 126px 0 72px;
+}
+
+body.food-page .food-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(18px, 3vw, 36px);
+}
+
+body.food-page .food-heading {
+    margin-bottom: 2.5rem;
+}
+
+body.food-page .food-heading h1 {
+    color: var(--game-text) !important;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(2.8rem, 6.5vw, 5rem);
+    font-weight: 500;
+    letter-spacing: -.065em;
+}
+
+body.food-page .food-heading h1 span {
+    color: var(--game-accent) !important;
+}
+
+body.food-page .food-heading > p:last-child {
+    color: var(--game-muted) !important;
+}
+
+body.food-page .food-menu,
+body.food-page .food-cart {
+    padding: clamp(1rem, 2.4vw, 1.6rem);
+    border: 1px solid var(--game-border);
+    border-radius: 16px;
+    background: var(--game-surface);
+    box-shadow: 0 12px 34px rgba(37, 65, 38, .06);
+}
+
+body.food-page .food-section-heading {
+    border-bottom-color: var(--game-border) !important;
+}
+
+body.food-page .food-section-heading h2,
+body.food-page .menu-item strong,
+body.food-page .cart-table td,
+body.food-page .cart-total strong,
+body.food-page .currency-input input {
+    color: var(--game-text) !important;
+}
+
+body.food-page .food-section-heading h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+body.food-page .food-section-heading,
+body.food-page .menu-item,
+body.food-page .cart-table td,
+body.food-page .cart-total {
+    border-color: var(--game-border) !important;
+}
+
+body.food-page .menu-group-title,
+body.food-page .menu-item b,
+body.food-page .save-status,
+body.food-page .change-line strong,
+body.food-page .currency-input > span {
+    color: var(--game-accent) !important;
+}
+
+body.food-page .food-heading > p:last-child,
+body.food-page .order-form label,
+body.food-page .payment-panel > label,
+body.food-page .cart-table th,
+body.food-page .empty-order,
+body.food-page .cart-total,
+body.food-page .change-line,
+body.food-page .text-button {
+    color: var(--game-muted) !important;
+    opacity: 1;
+}
+
+body.food-page .menu-item-image {
+    border-color: var(--game-border);
+    border-radius: 9px;
+}
+
+body.food-page .menu-item {
+    grid-template-columns: 50px minmax(0, 1fr);
+    align-items: center;
+}
+
+body.food-page .menu-item-image {
+    grid-row: 1 / span 2;
+    width: 50px;
+}
+
+body.food-page .menu-item-copy,
+body.food-page .menu-item b,
+body.food-page .menu-group:nth-child(2) .menu-item-copy,
+body.food-page .menu-group:nth-child(2) .menu-item b {
+    grid-column: 2;
+}
+
+body.food-page .menu-item b {
+    align-self: start;
+}
+
+body.food-page .order-controls select,
+body.food-page .order-controls input,
+body.food-page .currency-input,
+body.food-page .cart-table input {
+    border: 1px solid var(--game-border) !important;
+    border-radius: 9px !important;
+    background: var(--game-raised) !important;
+    color: var(--game-text) !important;
+}
+
+body.food-page .order-controls select option {
+    background: var(--game-surface) !important;
+    color: var(--game-text) !important;
+}
+
+body.food-page input::placeholder {
+    color: var(--game-muted);
+    opacity: .85;
+}
+
+body.food-page .food-button {
+    border-color: var(--game-accent) !important;
+    border-radius: 9px !important;
+    background: var(--game-accent) !important;
+    color: var(--game-button-text) !important;
+}
+
+body.food-page .food-button-secondary {
+    border-color: var(--game-accent) !important;
+    background: color-mix(in srgb, var(--game-accent) 10%, var(--game-surface)) !important;
+    color: var(--game-accent) !important;
+}
+
+body.food-page .remove-item {
+    border-radius: 8px !important;
+    color: #a33d42 !important;
+}
+
+body.food-page.dark-mode .remove-item {
+    color: #ff9a9a !important;
+}
+
+body.food-page .food-message {
+    color: var(--game-accent) !important;
+}
+
+body.food-page .food-message.is-error {
+    color: #a33d42 !important;
+}
+
+body.food-page.dark-mode .food-message.is-error {
+    color: #ff9a9a !important;
+}
+
+body.food-page :is(input, select, button):focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--game-accent) 50%, transparent);
+    outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+    body.flappy-page .page-shell {
+        padding-top: 104px;
+    }
+
+    body.flappy-page #game {
+        height: min(600px, 65dvh);
+        min-height: 380px;
+    }
+
+    body.food-page .food-menu,
+    body.food-page .food-cart {
+        padding: 1rem;
+    }
+
+    body.food-page .food-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.color-game-page,
+    body.quiz-page,
+    body.flappy-page,
+    body.food-page,
+    body.color-game-page *,
+    body.quiz-page *,
+    body.flappy-page *,
+    body.food-page * {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
+@media print {
+    body.food-page {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+}

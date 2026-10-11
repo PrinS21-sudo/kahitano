@@ -1,0 +1,191 @@
+.portfolio-site-header { overflow: visible; }
+ 
+.nb-svg {
+    position: absolute;
+    left: 0;
+    top: calc(100% - 20px);
+    width: 100%;
+    height: 86px;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 2;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .28));
+    --nb-vine: color-mix(in srgb, var(--sage, #7d9b86) 62%, var(--pink, #e8a3b8));
+    --nb-leaf: color-mix(in srgb, var(--sage, #7d9b86) 88%, #2f6b4f);
+    --nb-petal: var(--pink, #e8a3b8);
+    --nb-petal-2: color-mix(in srgb, var(--pink, #e8a3b8) 55%, #fff);
+    --nb-deep: color-mix(in srgb, var(--pink, #e8a3b8) 72%, #c2336f);
+    --nb-core: var(--moon, #f7e3a8);
+}
+body.dark-mode .nb-svg {
+    filter: drop-shadow(0 0 7px rgba(190, 200, 255, .22));
+    --nb-leaf: color-mix(in srgb, var(--sage, #6b7390) 80%, #7fe0c9);
+}
+ 
+.nb-vine {
+    fill: none;
+    stroke: var(--nb-vine);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: nbDraw var(--d, 2.8s) cubic-bezier(.5, 0, .3, 1) var(--t, 0s) forwards;
+}
+.nb-stem { stroke-width: 1.4; }
+.nb-tendril { stroke-width: 1.1; }
+ 
+.nb-leaf {
+    fill: var(--nb-leaf);
+    transform: scale(0);
+    animation: nbPop .7s cubic-bezier(.3, 1.6, .5, 1) var(--t, 0s) forwards;
+}
+.nb-sway {
+    transform-origin: 0 0;
+    animation: nbSway var(--sw, 5s) ease-in-out calc(var(--t, 0s) + 1.6s) infinite alternate;
+}
+.nb-head {
+    transform: scale(0) rotate(-50deg);
+    animation: nbBloom 1s cubic-bezier(.25, 1.5, .5, 1) var(--t, 0s) forwards;
+}
+.nb-fa { fill: var(--a); }
+.nb-fb { fill: var(--b); }
+.nb-fc { fill: var(--c); }
+.nb-fe { fill: var(--e); }
+.nb-fn { fill: none; stroke: var(--c); stroke-width: .9; stroke-linecap: round; }
+.nb-ln { stroke: var(--c); stroke-width: .5; stroke-opacity: .55; stroke-linejoin: round; }
+.nb-fn.nb-ln { stroke-opacity: 1; stroke-width: .9; }
+.nb-bud {
+    fill: var(--nb-petal);
+    transform: scale(0);
+    animation: nbPop .6s cubic-bezier(.3, 1.8, .5, 1) var(--t, 0s) forwards;
+}
+.nb-bud.nb-deep { fill: var(--nb-deep); }
+.nb-fall {
+    fill: var(--nb-petal); 
+    opacity: 0;
+    transform-origin: 0 0;
+    animation: nbFall var(--fd, 7s) ease-in var(--t, 0s) infinite;
+}
+.nb-core { fill: var(--nb-core); }
+.nb-spark {
+    fill: var(--nb-core);
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: nbTwinkle 2.6s ease-in-out var(--t, 0s) infinite;
+}
+ 
+
+.nb-settled .nb-vine,
+.nb-settled .nb-leaf,
+.nb-settled .nb-bud,
+.nb-settled .nb-head { animation-duration: .01s; animation-delay: 0s; }
+ 
+@keyframes nbDraw { to { stroke-dashoffset: 0; } }
+@keyframes nbFall {
+    0% { opacity: 0; transform: translate(0, 0) rotate(0) scale(.5); }
+    12% { opacity: .9; }
+    100% { opacity: 0; transform: translate(var(--dx, 14px), 46px) rotate(220deg) scale(.9); }
+}
+@keyframes nbPop { to { transform: scale(1); } }
+@keyframes nbBloom { to { transform: scale(var(--s, 1)) rotate(0); } }
+@keyframes nbSway { from { transform: rotate(-3.5deg); } to { transform: rotate(3.5deg); } }
+@keyframes nbTwinkle { 0%, 100% { opacity: 0; transform: scale(.3); } 50% { opacity: 1; transform: scale(1); } }
+ 
+@media (max-width: 768px) { .nb-svg { height: 74px; } }
+ 
+@media (prefers-reduced-motion: reduce) {
+    .nb-vine, .nb-leaf, .nb-bud, .nb-head { animation-duration: .01s !important; animation-delay: 0s !important; }
+    .nb-sway { animation: none; }
+    .nb-spark { animation: none; opacity: .8; }
+    .nb-fall { animation: none; }
+}
+ 
+ 
+
+.portfolio-site-header,
+.portfolio-site-header.is-scrolled,
+.portfolio-page-header.portfolio-site-header {
+    --bush-back: #c9dfc0;
+    background: linear-gradient(180deg, #eef7e8 0%, var(--bush-back) 100%) !important;
+    border-bottom-color: transparent !important;
+    padding-bottom: 1.9rem;
+    color: #28402f;
+}
+.portfolio-site-header .logo:not(:hover),
+.portfolio-site-header.is-scrolled .logo:not(:hover),
+.portfolio-site-header .nav-link:not(:hover),
+.portfolio-site-header.is-scrolled .nav-link:not(:hover),
+.portfolio-site-header .menu-toggle,
+.portfolio-site-header.is-scrolled .menu-toggle,
+.portfolio-page-header .menu-toggle { color: #28402f; }
+ 
+body.dark-mode .portfolio-site-header,
+body.dark-mode .portfolio-site-header.is-scrolled,
+body.dark-mode .portfolio-page-header.portfolio-site-header {
+    --bush-back: #1f3a3a;
+    background: linear-gradient(180deg, #14233a 0%, var(--bush-back) 100%) !important;
+    color: #e6efff;
+}
+body.dark-mode .portfolio-site-header .logo:not(:hover),
+body.dark-mode .portfolio-site-header.is-scrolled .logo:not(:hover),
+body.dark-mode .portfolio-site-header .nav-link:not(:hover),
+body.dark-mode .portfolio-site-header.is-scrolled .nav-link:not(:hover),
+body.dark-mode .portfolio-site-header .menu-toggle,
+body.dark-mode .portfolio-site-header.is-scrolled .menu-toggle,
+body.dark-mode .portfolio-page-header .menu-toggle { color: #e6efff; }
+ 
+
+.nb-svg.nb-bush {
+    z-index: 1;
+    height: 64px;
+    filter: drop-shadow(0 3px 4px rgba(40, 70, 50, .22));
+    --b1: #c9dfc0; --b2: #b6d3ad; --b3: #a3c99a; --b4: #d8ecce;
+    --fl0: #8fbf86; --fl1: #b5d98b; --fl2: #6fa57a; --vein: rgba(255, 255, 255, .5);
+}
+body.dark-mode .nb-svg.nb-bush {
+    filter: drop-shadow(0 0 8px rgba(127, 224, 201, .22));
+    --b1: #1f3a3a; --b2: #264740; --b3: #2f5a4c; --b4: #3d7160;
+    --fl0: #5fbf9f; --fl1: #8fe3b5; --fl2: #4aa38a; --vein: rgba(220, 255, 240, .45);
+}
+.nb-b1 { fill: var(--b1); }
+.nb-b2 { fill: var(--b2); }
+.nb-b3 { fill: var(--b3); }
+.nb-b4 { fill: var(--b4); }
+ 
+/* vines + leaves tuned to read on the bush */
+.nb-svg { --nb-vine: #5f8f6b; --nb-leaf: #4f8b5f; }
+body.dark-mode .nb-svg { --nb-vine: #7fd6b4; --nb-leaf: #4fbf9a; }
+ 
+
+.nb-lf {
+    transform-origin: 0 0;
+    opacity: 0;
+    animation: nbLeafFall var(--fd, 8s) linear var(--t, 3s) infinite;
+}
+.nb-ls {
+    transform-origin: 0 0;
+    animation: nbLeafSway var(--sd, 2.2s) ease-in-out infinite alternate;
+}
+.nb-fl0 { fill: var(--fl0); }
+.nb-fl1 { fill: var(--fl1); }
+.nb-fl2 { fill: var(--fl2); }
+.nb-vein { fill: none; stroke: var(--vein); stroke-width: 1; stroke-linecap: round; }
+ 
+@keyframes nbLeafFall {
+    0% { opacity: 0; transform: translate(0, 0) rotate(0); }
+    8% { opacity: .95; }
+    80% { opacity: .85; }
+    100% { opacity: 0; transform: translate(var(--dx, 40px), var(--fy, 200px)) rotate(var(--rot, 300deg)); }
+}
+@keyframes nbLeafSway {
+    from { transform: translateX(-12px) rotate(-28deg) scaleX(1); }
+    to { transform: translateX(12px) rotate(28deg) scaleX(.45); }
+}
+ 
+@media (prefers-reduced-motion: reduce) {
+    .nb-lf, .nb-ls { animation: none; }
+    .nb-lf { opacity: 0; }
+}
+ 
