@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+ 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +13,36 @@
     <link rel="stylesheet" href="../css/dark-mode.css">
     <link rel="stylesheet" href="../css/portfolio.css">
     <link rel="stylesheet" href="../css/game-themes.css">
+    <style>
+        .lives-row{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin:16px auto 0}
+        .hearts{display:flex;gap:8px}
+        .heart{width:32px;height:32px;color:#e5484d;transition:transform .3s,opacity .3s,color .3s}
+        .heart svg{width:100%;height:100%;display:block;fill:currentColor;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+        .heart.lost{color:var(--game-muted,#8a949c);opacity:.4;transform:scale(.85)}
+        .heart.lost svg{fill:none}
+        .heart.break{animation:heartBreak .7s ease both}
+        .hearts.danger .heart:not(.lost){animation:heartBeat .9s ease-in-out infinite}
+        @keyframes heartBreak{0%{transform:scale(1);color:#e5484d;opacity:1}25%{transform:scale(1.55) rotate(-14deg);color:#e5484d;opacity:1}55%{transform:scale(1.2) rotate(10deg)}100%{transform:scale(.85)}}
+        @keyframes heartBeat{50%{transform:scale(1.18)}}
+        .sound-toggle{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--game-muted,#667);cursor:pointer;user-select:none}
+        .sound-toggle input{width:18px;height:18px;accent-color:var(--game-accent,#527a43);cursor:pointer}
+        #game-board.shake{animation:boardShake .4s}
+        @keyframes boardShake{20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+        #game-board .box.hit-wrong{outline:4px solid #e5484d;outline-offset:-4px}
+        .go{position:fixed;inset:0;z-index:200;display:none;place-items:center;background:rgba(10,8,24,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:20px}
+        .go.on{display:grid;animation:goFade .3s both}
+        .go-card{width:min(420px,100%);text-align:center;padding:32px 24px;border-radius:24px;background:var(--game-surface,#fff);color:var(--game-text,#222);border:1px solid var(--game-border,rgba(0,0,0,.15));box-shadow:0 30px 80px rgba(0,0,0,.4);animation:goCard .55s cubic-bezier(.16,1,.3,1) both}
+        .go-card h2{font-size:2.3rem;margin-bottom:6px;color:var(--game-text,#222)}
+        .go-card p{color:var(--game-muted,#667)}
+        .go-hearts{display:flex;justify-content:center;gap:6px;margin:14px 0 0}.go-hearts .heart{width:24px;height:24px}
+        .go-score{font-size:4rem;font-weight:600;line-height:1;margin:14px 0 2px;color:var(--game-accent,#527a43)}
+        .go-actions{display:grid;gap:10px;margin-top:22px}
+        .go-actions button{padding:15px 18px;font-size:1rem;cursor:pointer}
+        @keyframes goFade{from{opacity:0}}
+        @keyframes goCard{from{opacity:0;transform:translateY(40px) scale(.9)}}
+        @media (prefers-reduced-motion:reduce){.heart,.go,.go-card,#game-board{animation:none!important}}
+    </style>
 </head>
-
 <body class="portfolio-page mini-game-page running color-game-page">
     <button class="theme-fab" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
         <svg class="sun-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
@@ -26,7 +54,7 @@
         <div class="header-right"><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu"><i data-lucide="menu"></i></button></div>
     </header>
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true"><button class="mobile-menu-close" id="menuClose" type="button" aria-label="Close menu"><i data-lucide="x"></i></button><nav aria-label="Mobile navigation"><a href="../index.html#home">Home</a><a href="../games.html">Games</a><a href="../about.html">About</a></nav></div>
-
+ 
     <div class="background">
         <div class="square square1"></div>
         <div class="square square2"></div>
@@ -35,12 +63,12 @@
         <div class="square square5"></div>
         <div class="square square6"></div>
     </div>
-
+ 
     <main class="container">
         <div class="game-title">COLOR GAME<span>Ni Prins · Walang Pusta</span></div>
-
+ 
         <div id="message">Enter a nickname, then press REGISTER</div>
-
+ 
         <div class="player-panel" id="player-panel">
             <label for="nickname">Enter a nickname to play</label>
             <div class="nickname-row">
@@ -49,7 +77,7 @@
             </div>
             <p id="player-status" class="player-status" aria-live="polite"></p>
         </div>
-
+ 
         <div class="difficulty-panel">
             <label for="difficulty">Difficulty</label>
             <select id="difficulty">
@@ -58,7 +86,12 @@
                 <option value="hard">Hard · 1 minute</option>
             </select>
         </div>
-
+ 
+        <div class="lives-row">
+            <div class="hearts" id="hearts" role="img" aria-label="Lives"></div>
+            <label class="sound-toggle"><input type="checkbox" id="soundToggle" checked> Sound effects</label>
+        </div>
+ 
         <section class="scoreboard" aria-label="Scoreboard">
             <div class="score-stat">
                 <span>Score</span>
@@ -77,11 +110,11 @@
                 <strong id="timer">05:00</strong>
             </div>
         </section>
-
+ 
         <div id="game-board"></div>
-
+ 
         <button id="start-game-btn" type="button">START GAME</button>
-
+ 
         <section class="leaderboard" aria-labelledby="leaderboard-title">
             <div class="leaderboard-heading">
                 <h2 id="leaderboard-title">LEADERBOARD</h2>
@@ -90,7 +123,19 @@
             <ol id="leaderboard-list"></ol>
         </section>
     </main>
-
+    <div class="go" id="gameOver" role="dialog" aria-modal="true" aria-labelledby="goTitle">
+        <div class="go-card">
+            <h2 id="goTitle">Game over</h2>
+            <p id="goReason"></p>
+            <div class="go-hearts" id="goHearts" aria-hidden="true"></div>
+            <div class="go-score" id="goScore">0</div>
+            <p id="goMeta"></p>
+            <div class="go-actions">
+                <button type="button" id="tryAgain">TRY AGAIN</button>
+                <button type="button" id="closeOver">CHANGE DIFFICULTY</button>
+            </div>
+        </div>
+    </div>
     <script>
         var score = 0;
         var streak = 0;
@@ -101,24 +146,28 @@
         var timerId = null;
         var isPlaying = false;
         var leaderboardKey = 'colorGameLeaderboard';
+        var livesByDifficulty = { easy: 5, medium: 3, hard: 1 };
+        var lives = 5;
+        var audioCtx = null;
+        var soundOn = localStorage.getItem('colorGameSound') !== '0';
         var difficultyTimes = {
             easy: 300,
             medium: 180,
             hard: 60
         };
-
+ 
         var startButton = document.getElementById('start-game-btn');
         var registerButton = document.getElementById('register-btn');
         var nicknameInput = document.getElementById('nickname');
         var difficultySelect = document.getElementById('difficulty');
-
+ 
         function updateScoreboard() {
             document.getElementById('score').textContent = score;
             document.getElementById('level').textContent = gridSize + ' × ' + gridSize;
             document.getElementById('streak').textContent = streak;
             document.getElementById('timer').textContent = formatTime(timeLeft);
         }
-
+ 
         function setStartButtonState() {
             var hasNickname = nickname.trim().length > 0;
             startButton.disabled = isPlaying || !hasNickname;
@@ -126,58 +175,60 @@
             startButton.setAttribute('aria-disabled', String(startButton.disabled));
             difficultySelect.disabled = isPlaying;
         }
-
-        function endGame() {
+ 
+        function endGame(reason) {
             if (!isPlaying) {
                 return;
             }
-
+ 
             isPlaying = false;
             clearInterval(timerId);
             timerId = null;
-
-            document.getElementById('message').textContent = 'Time is up! Final score: ' + score;
+ 
+            document.getElementById('message').textContent = (reason === 'lives' ? 'Out of lives! Final score: ' : 'Time is up! Final score: ') + score;
             setStartButtonState();
-
+ 
             if (nickname) {
                 saveLeaderboard();
             }
-
+ 
             updateScoreboard();
+            playGameOver();
+            showGameOver(reason);
         }
-
+ 
         function startTimer() {
             if (timerId) {
                 clearInterval(timerId);
             }
-
+ 
             timeLeft = difficultyTimes[difficulty] || 300;
             updateScoreboard();
-
+ 
             timerId = setInterval(function () {
                 if (!isPlaying) {
                     return;
                 }
-
+ 
                 timeLeft = Math.max(0, timeLeft - 1);
                 updateScoreboard();
-
+ 
                 if (timeLeft <= 0) {
                     endGame();
                 }
             }, 1000);
         }
-
+ 
         function formatTime(totalSeconds) {
             var minutes = Math.floor(totalSeconds / 60);
             var seconds = totalSeconds % 60;
             return minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
         }
-
+ 
         function renderLeaderboard() {
             var list = document.getElementById('leaderboard-list');
             list.innerHTML = '';
-
+ 
             var stored = JSON.parse(localStorage.getItem(leaderboardKey) || '[]');
             if (!stored.length) {
                 var empty = document.createElement('li');
@@ -186,7 +237,7 @@
                 list.appendChild(empty);
                 return;
             }
-
+ 
             stored.slice(0, 5).forEach(function (entry, index) {
                 var item = document.createElement('li');
                 if (entry.name && nickname && entry.name.toLowerCase() === nickname.toLowerCase()) {
@@ -196,7 +247,7 @@
                 list.appendChild(item);
             });
         }
-
+ 
         function saveLeaderboard() {
             var stored = JSON.parse(localStorage.getItem(leaderboardKey) || '[]');
             if (nickname) {
@@ -207,19 +258,19 @@
                     date: new Date().toLocaleDateString()
                 });
             }
-
+ 
             stored.sort(function (a, b) {
                 return b.score - a.score;
             });
-
+ 
             localStorage.setItem(leaderboardKey, JSON.stringify(stored.slice(0, 5)));
             renderLeaderboard();
         }
-
+ 
         function registerPlayer() {
             nickname = document.getElementById('nickname').value.trim();
             var status = document.getElementById('player-status');
-
+ 
             if (!nickname) {
                 status.textContent = 'Please enter a nickname first.';
                 status.classList.add('is-error');
@@ -227,18 +278,18 @@
                 setStartButtonState();
                 return;
             }
-
+ 
             status.textContent = 'Nickname ready: ' + nickname;
             status.classList.add('is-success');
             status.classList.remove('is-error');
             setStartButtonState();
         }
-
+ 
         function startGame() {
             if (isPlaying) {
                 return;
             }
-
+ 
             if (!nickname.trim()) {
                 var status = document.getElementById('player-status');
                 status.textContent = 'Please enter a nickname first.';
@@ -246,14 +297,18 @@
                 status.classList.remove('is-success');
                 return;
             }
-
+ 
+            initAudio();
+            hideGameOver();
             difficulty = difficultySelect.value;
+            lives = livesByDifficulty[difficulty] || 3;
+            renderLives();
             score = 0;
             streak = 0;
             gridSize = 4;
             timeLeft = difficultyTimes[difficulty] || 300;
             isPlaying = true;
-
+ 
             setStartButtonState();
             updateScoreboard();
             document.getElementById('message').textContent = 'Find the different color';
@@ -261,14 +316,14 @@
             renderLeaderboard();
             startTimer();
         }
-
+ 
         function newRound() {
             var game = document.getElementById('game-board');
             game.innerHTML = '';
             game.style.gridTemplateColumns = 'repeat(' + gridSize + ', 1fr)';
             game.style.gridTemplateRows = 'repeat(' + gridSize + ', 1fr)';
             updateScoreboard();
-
+ 
             var colors = [
                 [255, 0, 0],
                 [0, 120, 255],
@@ -280,14 +335,14 @@
                 [105, 255, 180],
                 [255, 105, 180]
             ];
-
+ 
             var color = colors[Math.floor(Math.random() * colors.length)];
             var r = color[0];
             var g = color[1];
             var b = color[2];
-
+ 
             var difference;
-
+ 
             if (score < 4) {
                 difference = 60;
             }
@@ -309,11 +364,11 @@
             else {
                 difference = 15;
             }
-
+ 
             var differentR;
             var differentG;
             var differentB;
-
+ 
             if (r + difference <= 255 && g + difference <= 255 && b + difference <= 255) {
                 differentR = r + difference;
                 differentG = g + difference;
@@ -323,42 +378,155 @@
                 differentG = Math.max(0, g - difference);
                 differentB = Math.max(0, b - difference);
             }
-
+ 
             var totalBoxes = gridSize * gridSize;
             var answer = Math.floor(Math.random() * totalBoxes);
-
+ 
             for (var i = 0; i < totalBoxes; i++) {
                 var box = document.createElement('div');
                 box.className = 'box';
-
+ 
                 if (i === answer) {
                     box.style.backgroundColor = 'rgb(' + differentR + ',' + differentG + ',' + differentB + ')';
                     box.onclick = function () {
+                        if (!isPlaying) { return; }
+                        playCorrect();
                         score++;
                         streak++;
                         document.getElementById('score').textContent = score;
                         document.getElementById('message').textContent = 'Correct!';
                         document.getElementById('streak').textContent = streak;
-
+ 
                         if (score % 3 === 0) {
                             gridSize++;
                         }
-
+ 
                         newRound();
                     };
                 } else {
                     box.style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
                     box.onclick = function () {
-                        streak = 0;
-                        document.getElementById('streak').textContent = streak;
-                        document.getElementById('message').textContent = 'Wrong! Try again.';
+                        if (!isPlaying) { return; }
+                        loseLife(box);
                     };
                 }
-
+ 
                 game.appendChild(box);
             }
         }
-
+ 
+        
+        var HEART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.7 5 6 5c2 0 3.4 1 4.2 2.4h.1C11.1 6 12.5 5 14.5 5c3.3 0 5.1 3.4 3.6 6.8C15.9 16.4 12 21 12 21Z"/></svg>';
+ 
+        function heartsMarkup(total, current, brokenIndex) {
+            var html = '';
+            for (var i = 0; i < total; i++) {
+                var cls = 'heart' + (i >= current ? ' lost' : '') + (i === brokenIndex ? ' break' : '');
+                html += '<span class="' + cls + '">' + HEART + '</span>';
+            }
+            return html;
+        }
+ 
+        function renderLives(brokenIndex) {
+            var total = livesByDifficulty[difficultySelect.value] || livesByDifficulty[difficulty] || 3;
+            var hearts = document.getElementById('hearts');
+            hearts.innerHTML = heartsMarkup(total, lives, brokenIndex);
+            hearts.classList.toggle('danger', isPlaying && lives === 1 && total > 1);
+            hearts.setAttribute('aria-label', 'Lives: ' + lives + ' of ' + total);
+        }
+ 
+        function loseLife(box) {
+            streak = 0;
+            lives = Math.max(0, lives - 1);
+            document.getElementById('streak').textContent = streak;
+            renderLives(lives);
+            playWrong();
+            box.classList.add('hit-wrong');
+            var board = document.getElementById('game-board');
+            board.classList.remove('shake');
+            void board.offsetWidth;
+            board.classList.add('shake');
+ 
+            if (lives <= 0) {
+                endGame('lives');
+            } else {
+                document.getElementById('message').textContent = 'Wrong! ' + lives + (lives === 1 ? ' life left.' : ' lives left.');
+            }
+        }
+ 
+        function showGameOver(reason) {
+            var total = livesByDifficulty[difficulty] || 3;
+            document.getElementById('goTitle').textContent = reason === 'lives' ? 'Game over' : "Time's up!";
+            document.getElementById('goReason').textContent = reason === 'lives' ? 'You ran out of lives.' : 'The clock ran out.';
+            document.getElementById('goHearts').innerHTML = reason === 'lives' ? heartsMarkup(total, 0) : heartsMarkup(total, lives);
+            document.getElementById('goScore').textContent = score;
+            document.getElementById('goMeta').textContent = difficulty.toUpperCase() + ' mode';
+            document.getElementById('gameOver').classList.add('on');
+            document.getElementById('tryAgain').focus();
+        }
+ 
+        function hideGameOver() {
+            document.getElementById('gameOver').classList.remove('on');
+        }
+ 
+        function initAudio() {
+            try {
+                if (!audioCtx) {
+                    var AC = window.AudioContext || window.webkitAudioContext;
+                    if (AC) { audioCtx = new AC(); }
+                }
+                if (audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
+            } catch (error) {}
+        }
+ 
+        function tone(freq, start, duration, type, volume, endFreq) {
+            if (!soundOn || !audioCtx) { return; }
+            var t = audioCtx.currentTime + start;
+            var osc = audioCtx.createOscillator();
+            var gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, t);
+            if (endFreq) { osc.frequency.exponentialRampToValueAtTime(endFreq, t + duration); }
+            gain.gain.setValueAtTime(0.0001, t);
+            gain.gain.exponentialRampToValueAtTime(volume, t + 0.015);
+            gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(t);
+            osc.stop(t + duration + 0.05);
+        }
+ 
+        function playCorrect() {
+            tone(660, 0, 0.12, 'sine', 0.25);
+            tone(880, 0.09, 0.18, 'sine', 0.25);
+            tone(1320, 0.18, 0.22, 'triangle', 0.12);
+        }
+ 
+        function playWrong() {
+            tone(220, 0, 0.3, 'sawtooth', 0.18, 90);
+            tone(110, 0.05, 0.3, 'square', 0.09, 70);
+        }
+ 
+        function playGameOver() {
+            [392, 330, 262, 196].forEach(function (f, i) {
+                tone(f, 0.35 + i * 0.17, i === 3 ? 0.55 : 0.2, 'triangle', 0.22);
+            });
+        }
+ 
+        document.getElementById('soundToggle').addEventListener('change', function (event) {
+            soundOn = event.target.checked;
+            localStorage.setItem('colorGameSound', soundOn ? '1' : '0');
+            if (soundOn) { initAudio(); playCorrect(); }
+        });
+        document.getElementById('tryAgain').addEventListener('click', startGame);
+        document.getElementById('closeOver').addEventListener('click', function () {
+            hideGameOver();
+            lives = livesByDifficulty[difficultySelect.value] || 3;
+            renderLives();
+            document.getElementById('message').textContent = 'Pick a difficulty, then press START GAME';
+        });
+        document.addEventListener('pointerdown', initAudio, { once: true });
+ 
         registerButton.addEventListener('click', registerPlayer);
         nicknameInput.addEventListener('keydown', function (event) {
             if (event.key === 'Enter') {
@@ -370,18 +538,22 @@
             if (isPlaying) {
                 return;
             }
-
+ 
             difficulty = difficultySelect.value;
             document.getElementById('leaderboard-difficulty').textContent = difficulty.toUpperCase() + ' · TOP 5';
+            lives = livesByDifficulty[difficulty] || 3;
+            renderLives();
         });
-
+ 
         updateScoreboard();
         renderLeaderboard();
         document.getElementById('leaderboard-difficulty').textContent = difficulty.toUpperCase() + ' · TOP 5';
         setStartButtonState();
+        renderLives();
     </script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="../js/navigation.js"></script>
     <script src="../js/dark-mode.js"></script>
 </body>
 </html>
+ 
