@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="../css/dark-mode.css">
 <link rel="stylesheet" href="../css/portfolio.css">
 <link rel="stylesheet" href="../css/nav-bloom.css">
+<link rel="stylesheet" href="../css/mobile-menu.css">
 <style>
 body.kiosk{--hh:84px;--bg:#f5f1fc;--sur:#fff;--ink:#1f1537;--mut:#6b6385;--ac:#5b3ba8;--on:#fff;--hi:#d8e84a;--ln:rgba(31,21,55,.12);--ok:#23885a;--er:#c43d4b;--tile:88%;--sat:70%;--ease:cubic-bezier(.16,1,.3,1)}
 body.kiosk.dark-mode{--bg:#120b24;--sur:#1c1236;--ink:#f1ecff;--mut:#a89fc7;--ac:#d8e84a;--on:#1b1030;--ln:rgba(241,236,255,.16);--ok:#6fe0a5;--er:#ff8a96;--tile:26%;--sat:35%}
@@ -59,8 +60,8 @@ h1,h2,h3,.disp{font-family:'Bricolage Grotesque',system-ui,sans-serif;letter-spa
 /* menu */
 #s-menu{gap:22px}
 .catalog{flex:1;min-width:0;display:flex;flex-direction:column}
-.tabs{display:flex;gap:10px;overflow-x:auto;padding:4px 0 16px;scrollbar-width:none}
-.tab{white-space:nowrap;padding:12px 20px;border-radius:99px;border:1px solid var(--ln);background:var(--sur);font-weight:600;transition:all .3s var(--ease)}
+.tabs{display:flex;flex:none;gap:10px;position:relative;min-width:0;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:4px 20px 16px 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;scroll-snap-type:x proximity}
+.tab{flex:none;scroll-snap-align:center;white-space:nowrap;padding:12px 20px;border-radius:99px;border:1px solid var(--ln);background:var(--sur);font-weight:600;transition:all .3s var(--ease)}
 .tab.on{background:var(--ac);color:var(--on);border-color:var(--ac);transform:scale(1.05)}
 .grid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px;align-content:start;padding:4px 4px 90px}
 .card{text-align:left;background:var(--sur);border:1px solid var(--ln);border-radius:24px;padding:12px;display:grid;gap:10px;animation:pop .55s var(--ease) both;animation-delay:calc(var(--i)*45ms);transition:transform .3s var(--ease),box-shadow .3s}
@@ -151,14 +152,14 @@ body.kiosk{--hh:74px}
 </header>
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true"><button class="mobile-menu-close" id="menuClose" type="button" aria-label="Close menu"><i data-lucide="x"></i></button><nav aria-label="Mobile navigation"><a href="../index.html#home">Home</a><a href="../games.html">Games</a><a href="../about.html">About</a></nav></div>
 <div class="bg" aria-hidden="true"></div>
-
+ 
 <section class="screen on" id="s-attract">
   <div class="orbit" id="orbit" aria-hidden="true"></div>
   <h1>Hungry?<br>Order here.</h1>
   <p>Pick your food, pay at the kiosk, and get your receipt.</p>
   <button class="cta" id="start">Touch to start</button>
 </section>
-
+ 
 <section class="screen" id="s-type">
   <h2>Where will you eat today?</h2>
   <div class="types">
@@ -166,7 +167,7 @@ body.kiosk{--hh:74px}
     <button class="type" data-type="Take out"><span class="big">🛍️</span><strong>Take out</strong><small>We pack it for you</small></button>
   </div>
 </section>
-
+ 
 <section class="screen" id="s-menu">
   <div class="catalog">
     <div class="tabs" id="tabs" role="tablist" aria-label="Menu categories"></div>
@@ -184,7 +185,7 @@ body.kiosk{--hh:74px}
   </aside>
   <button class="bar2" id="bar2" type="button"><span class="cicon" id="bicon">🛒<em id="bcount">0</em></span><span>View order</span><span id="btotal">₱0.00</span></button>
 </section>
-
+ 
 <section class="screen" id="s-done">
   <h2 id="doneTitle">Thank you!</h2>
   <div class="slot" aria-hidden="true"></div>
@@ -192,7 +193,7 @@ body.kiosk{--hh:74px}
   <button class="btn again" id="print" type="button">Print receipt</button>
   <button class="link" id="again" type="button">Start a new order</button>
 </section>
-
+ 
 <div class="ov" id="pay"><div class="sheet" role="dialog" aria-modal="true" aria-label="Payment">
   <h2>Amount due <span id="payTotal"></span></h2>
   <div class="seg" id="seg"><button class="on" data-m="Cash">💵 Cash</button><button data-m="Card / e-wallet">💳 Card / e-wallet</button></div>
@@ -206,9 +207,9 @@ body.kiosk{--hh:74px}
   <button class="btn" id="payGo" disabled>Pay</button>
   <button class="link" id="payCancel" type="button">Back to menu</button>
 </div></div>
-
+ 
 <div class="ov" id="idle" style="align-items:center"><div class="sheet warn" style="border-radius:32px"><h2>Still ordering?</h2><big class="warn big" id="idleN">10</big><p>This order will reset soon.</p><button class="btn" id="stay">Keep ordering</button></div></div>
-
+ 
 <script>
 (function(){
 var MENU=[
@@ -230,10 +231,10 @@ function money(c){return '₱'+(c/100).toLocaleString('en-PH',{minimumFractionDi
 function save(){localStorage.setItem(cartKey,JSON.stringify(cart));queueSync()}
 function calc(){return Object.keys(cart).reduce(function(s,k){return s+byKey[k].price*cart[k]},0)}
 function count(){return Object.keys(cart).reduce(function(s,k){return s+cart[k]},0)}
-
+ 
 /* attract orbit */
 $('orbit').innerHTML=['🍔','🍕','🍜','🌮','🍗','🧋','🍝','🥗'].map(function(e,i){return '<span style="--a:'+i*45+'deg"><b>'+e+'</b></span>'}).join('');
-
+ 
 /* screens + idle reset */
 var idleT,warnT;
 function show(n){screen=n;document.querySelectorAll('.screen').forEach(function(s){s.classList.toggle('on',s.id==='s-'+n)});if(n==='menu'){renderTabs();renderGrid();render()}bump()}
@@ -244,9 +245,11 @@ $('stay').onclick=function(){stopWarn();bump()};
 ['pointerdown','keydown'].forEach(function(e){addEventListener(e,bump)});
 $('start').onclick=function(){show('type')};
 document.querySelectorAll('.type').forEach(function(b){b.onclick=function(){orderType=b.dataset.type;show('menu')}});
-
+ 
 /* menu */
-function renderTabs(){$('tabs').innerHTML='';CATS.forEach(function(c){var b=document.createElement('button');b.className='tab'+(c===cat?' on':'');b.textContent=c;b.setAttribute('role','tab');b.onclick=function(){cat=c;renderTabs();renderGrid()};$('tabs').appendChild(b)})}
+function renderTabs(){var t=$('tabs');
+if(!t.children.length)CATS.forEach(function(c){var b=document.createElement('button');b.textContent=c;b.setAttribute('role','tab');b.onclick=function(){cat=c;renderTabs();renderGrid()};t.appendChild(b)});
+Array.prototype.forEach.call(t.children,function(b){var on=b.textContent===cat;b.className='tab'+(on?' on':'');b.setAttribute('aria-selected',String(on));if(on&&t.scrollWidth>t.clientWidth)t.scrollTo({left:b.offsetLeft-(t.clientWidth-b.offsetWidth)/2,behavior:'smooth'})})}
 function renderGrid(){var g=$('grid');g.innerHTML='';g.scrollTop=0;MENU.filter(function(m){return m.cat===cat}).forEach(function(m,i){
 var b=document.createElement('button');b.className='card';b.style.setProperty('--i',i);b.dataset.key=m.key;
 b.innerHTML='<div class="plate" style="--h:'+m.hue+'"><b>'+m.art+'</b>'+(cart[m.key]?'<span class="qtybadge">×'+cart[m.key]+'</span>':'')+'</div><h3>'+m.name+'</h3><div class="row"><span class="price">'+money(m.price)+'</span><span class="add" aria-hidden="true">+</span></div>';
@@ -271,7 +274,7 @@ f.animate([{transform:'translate(0,0) scale(1)'},{transform:'translate('+dx*.45+
 $('clear').onclick=function(){cart={};save();render();renderGrid()};
 $('bar2').onclick=function(){$('cart').classList.toggle('open')};$('cartClose').onclick=function(){$('cart').classList.remove('open')};
 document.addEventListener('pointerdown',function(e){var c=$('cart');if(c.classList.contains('open')&&!c.contains(e.target)&&!$('bar2').contains(e.target))c.classList.remove('open')});
-
+ 
 /* payment */
 function openPay(){$('payTotal').textContent=money(total);$('cashIn').value='';method='Cash';setMethod();var p=total/100;
 var c=[p,Math.ceil(p/50)*50,Math.ceil(p/100)*100,Math.ceil(p/500)*500,Math.ceil(p/1000)*1000].filter(function(v,i,a){return a.indexOf(v)===i});
@@ -285,7 +288,7 @@ h.className='hint'+(c?(ok?' good':' bad'):'');h.textContent=!c?'Enter the cash h
 document.querySelectorAll('#seg button').forEach(function(b){b.onclick=function(){method=b.dataset.m;setMethod()}});
 $('cashIn').oninput=upd;$('checkout').onclick=openPay;$('payCancel').onclick=function(){$('pay').classList.remove('on')};
 $('payGo').onclick=function(){var go=$('payGo');if(method==='Cash'){finish();return}go.disabled=true;go.innerHTML='<span class="spin"></span>Processing…';setTimeout(finish,1700)};
-
+ 
 /* receipt */
 function finish(){var n=(+localStorage.getItem('kioskOrderNo')||100)+1,c=method==='Cash'?cash():total,r=$('receipt');localStorage.setItem('kioskOrderNo',n);
 var rows=Object.keys(cart).map(function(k){var m=byKey[k];return '<div>'+m.name+'</div><div class="r"><span>'+cart[k]+' x '+(m.price/100).toFixed(2)+'</span><span>'+(m.price*cart[k]/100).toFixed(2)+'</span></div>'}).join('');
@@ -294,7 +297,7 @@ $('doneTitle').textContent='Order #'+n+' is in!';
 $('pay').classList.remove('on');cart={};save();shown=0;show('done');var p=r.parentNode;p.replaceChild(r,r);r.style.animation='none';void r.offsetWidth;r.style.animation=''}
 $('print').onclick=function(){window.print()};
 $('again').onclick=function(){show('attract')};
-
+ 
 /* optional database sync: the kiosk works fully without it */
 var syncT,syncing=false;
 function status(ok){var s=$('sync');s.className='chip '+(ok?'ok':'off');s.lastChild.textContent=ok?'Saved to database':'Saved on this device'}
@@ -313,5 +316,7 @@ api('load').then(function(o){if(!Object.keys(cart).length&&o.items.length){o.ite
 <script src="../js/navigation.js"></script>
 <script src="../js/dark-mode.js"></script>
 <script src="../js/nav-bloom.js"></script>
+<script src="../js/mobile-menu.js"></script>
 </body>
 </html>
+ 
