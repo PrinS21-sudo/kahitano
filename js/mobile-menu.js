@@ -15,6 +15,19 @@
         }
     } catch (error) {}
  
+    /* No text selection anywhere, except inside typing fields.
+       (Backs up the CSS: stops selection while dragging, e.g. on the book.) */
+    function inField(node) {
+        var el = node && node.nodeType === 3 ? node.parentElement : node;
+        return !!(el && el.closest && el.closest("input, textarea, select, [contenteditable=\"true\"]"));
+    }
+    document.addEventListener("selectstart", function (event) {
+        if (!inField(event.target)) event.preventDefault();
+    });
+    document.addEventListener("dragstart", function (event) {
+        if (event.target && event.target.tagName === "IMG") event.preventDefault();
+    });
+ 
     var menu = document.getElementById("mobileMenu");
     if (!menu) return;
  
