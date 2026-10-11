@@ -20,6 +20,14 @@ body.kiosk{font-family:'Instrument Sans',system-ui,sans-serif;color:var(--ink);o
 body.kiosk:not(.dark-mode){background:var(--bg)}
 .kiosk .portfolio-site-header,.kiosk .mobile-menu{font-family:'Inter',sans-serif}.kiosk .mobile-menu{z-index:95}
 .screen,.ov,.bar2{touch-action:manipulation}
+body.kiosk .theme-fab{z-index:92}
+/* themed scrollbars */
+.grid,.lines,.sheet,.tabs,#s-done,#s-type{scrollbar-width:thin;scrollbar-color:var(--ac) transparent}
+.grid::-webkit-scrollbar,.lines::-webkit-scrollbar,.sheet::-webkit-scrollbar,#s-done::-webkit-scrollbar,#s-type::-webkit-scrollbar{width:10px;height:10px}
+.grid::-webkit-scrollbar-track,.lines::-webkit-scrollbar-track,.sheet::-webkit-scrollbar-track,#s-done::-webkit-scrollbar-track,#s-type::-webkit-scrollbar-track{background:transparent;margin:10px 0}
+.grid::-webkit-scrollbar-thumb,.lines::-webkit-scrollbar-thumb,.sheet::-webkit-scrollbar-thumb,#s-done::-webkit-scrollbar-thumb,#s-type::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--ac) 55%,transparent);border-radius:99px;border:3px solid transparent;background-clip:padding-box;transition:background .3s}
+.grid::-webkit-scrollbar-thumb:hover,.lines::-webkit-scrollbar-thumb:hover,.sheet::-webkit-scrollbar-thumb:hover,#s-done::-webkit-scrollbar-thumb:hover{background:var(--ac);background-clip:padding-box}
+.tabs::-webkit-scrollbar{height:0}
 h1,h2,h3,.disp{font-family:'Bricolage Grotesque',system-ui,sans-serif;letter-spacing:-.03em}
 .screen button,.ov button,.bar2{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 :focus-visible{outline:3px solid var(--ac);outline-offset:3px}
@@ -143,14 +151,14 @@ body.kiosk{--hh:74px}
 </header>
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true"><button class="mobile-menu-close" id="menuClose" type="button" aria-label="Close menu"><i data-lucide="x"></i></button><nav aria-label="Mobile navigation"><a href="../index.html#home">Home</a><a href="../games.html">Games</a><a href="../about.html">About</a></nav></div>
 <div class="bg" aria-hidden="true"></div>
- 
+
 <section class="screen on" id="s-attract">
   <div class="orbit" id="orbit" aria-hidden="true"></div>
   <h1>Hungry?<br>Order here.</h1>
   <p>Pick your food, pay at the kiosk, and get your receipt.</p>
   <button class="cta" id="start">Touch to start</button>
 </section>
- 
+
 <section class="screen" id="s-type">
   <h2>Where will you eat today?</h2>
   <div class="types">
@@ -158,7 +166,7 @@ body.kiosk{--hh:74px}
     <button class="type" data-type="Take out"><span class="big">🛍️</span><strong>Take out</strong><small>We pack it for you</small></button>
   </div>
 </section>
- 
+
 <section class="screen" id="s-menu">
   <div class="catalog">
     <div class="tabs" id="tabs" role="tablist" aria-label="Menu categories"></div>
@@ -176,7 +184,7 @@ body.kiosk{--hh:74px}
   </aside>
   <button class="bar2" id="bar2" type="button"><span class="cicon" id="bicon">🛒<em id="bcount">0</em></span><span>View order</span><span id="btotal">₱0.00</span></button>
 </section>
- 
+
 <section class="screen" id="s-done">
   <h2 id="doneTitle">Thank you!</h2>
   <div class="slot" aria-hidden="true"></div>
@@ -184,7 +192,7 @@ body.kiosk{--hh:74px}
   <button class="btn again" id="print" type="button">Print receipt</button>
   <button class="link" id="again" type="button">Start a new order</button>
 </section>
- 
+
 <div class="ov" id="pay"><div class="sheet" role="dialog" aria-modal="true" aria-label="Payment">
   <h2>Amount due <span id="payTotal"></span></h2>
   <div class="seg" id="seg"><button class="on" data-m="Cash">💵 Cash</button><button data-m="Card / e-wallet">💳 Card / e-wallet</button></div>
@@ -198,9 +206,9 @@ body.kiosk{--hh:74px}
   <button class="btn" id="payGo" disabled>Pay</button>
   <button class="link" id="payCancel" type="button">Back to menu</button>
 </div></div>
- 
+
 <div class="ov" id="idle" style="align-items:center"><div class="sheet warn" style="border-radius:32px"><h2>Still ordering?</h2><big class="warn big" id="idleN">10</big><p>This order will reset soon.</p><button class="btn" id="stay">Keep ordering</button></div></div>
- 
+
 <script>
 (function(){
 var MENU=[
@@ -222,10 +230,10 @@ function money(c){return '₱'+(c/100).toLocaleString('en-PH',{minimumFractionDi
 function save(){localStorage.setItem(cartKey,JSON.stringify(cart));queueSync()}
 function calc(){return Object.keys(cart).reduce(function(s,k){return s+byKey[k].price*cart[k]},0)}
 function count(){return Object.keys(cart).reduce(function(s,k){return s+cart[k]},0)}
- 
+
 /* attract orbit */
 $('orbit').innerHTML=['🍔','🍕','🍜','🌮','🍗','🧋','🍝','🥗'].map(function(e,i){return '<span style="--a:'+i*45+'deg"><b>'+e+'</b></span>'}).join('');
- 
+
 /* screens + idle reset */
 var idleT,warnT;
 function show(n){screen=n;document.querySelectorAll('.screen').forEach(function(s){s.classList.toggle('on',s.id==='s-'+n)});if(n==='menu'){renderTabs();renderGrid();render()}bump()}
@@ -236,7 +244,7 @@ $('stay').onclick=function(){stopWarn();bump()};
 ['pointerdown','keydown'].forEach(function(e){addEventListener(e,bump)});
 $('start').onclick=function(){show('type')};
 document.querySelectorAll('.type').forEach(function(b){b.onclick=function(){orderType=b.dataset.type;show('menu')}});
- 
+
 /* menu */
 function renderTabs(){$('tabs').innerHTML='';CATS.forEach(function(c){var b=document.createElement('button');b.className='tab'+(c===cat?' on':'');b.textContent=c;b.setAttribute('role','tab');b.onclick=function(){cat=c;renderTabs();renderGrid()};$('tabs').appendChild(b)})}
 function renderGrid(){var g=$('grid');g.innerHTML='';g.scrollTop=0;MENU.filter(function(m){return m.cat===cat}).forEach(function(m,i){
@@ -263,7 +271,7 @@ f.animate([{transform:'translate(0,0) scale(1)'},{transform:'translate('+dx*.45+
 $('clear').onclick=function(){cart={};save();render();renderGrid()};
 $('bar2').onclick=function(){$('cart').classList.toggle('open')};$('cartClose').onclick=function(){$('cart').classList.remove('open')};
 document.addEventListener('pointerdown',function(e){var c=$('cart');if(c.classList.contains('open')&&!c.contains(e.target)&&!$('bar2').contains(e.target))c.classList.remove('open')});
- 
+
 /* payment */
 function openPay(){$('payTotal').textContent=money(total);$('cashIn').value='';method='Cash';setMethod();var p=total/100;
 var c=[p,Math.ceil(p/50)*50,Math.ceil(p/100)*100,Math.ceil(p/500)*500,Math.ceil(p/1000)*1000].filter(function(v,i,a){return a.indexOf(v)===i});
@@ -277,7 +285,7 @@ h.className='hint'+(c?(ok?' good':' bad'):'');h.textContent=!c?'Enter the cash h
 document.querySelectorAll('#seg button').forEach(function(b){b.onclick=function(){method=b.dataset.m;setMethod()}});
 $('cashIn').oninput=upd;$('checkout').onclick=openPay;$('payCancel').onclick=function(){$('pay').classList.remove('on')};
 $('payGo').onclick=function(){var go=$('payGo');if(method==='Cash'){finish();return}go.disabled=true;go.innerHTML='<span class="spin"></span>Processing…';setTimeout(finish,1700)};
- 
+
 /* receipt */
 function finish(){var n=(+localStorage.getItem('kioskOrderNo')||100)+1,c=method==='Cash'?cash():total,r=$('receipt');localStorage.setItem('kioskOrderNo',n);
 var rows=Object.keys(cart).map(function(k){var m=byKey[k];return '<div>'+m.name+'</div><div class="r"><span>'+cart[k]+' x '+(m.price/100).toFixed(2)+'</span><span>'+(m.price*cart[k]/100).toFixed(2)+'</span></div>'}).join('');
@@ -286,7 +294,7 @@ $('doneTitle').textContent='Order #'+n+' is in!';
 $('pay').classList.remove('on');cart={};save();shown=0;show('done');var p=r.parentNode;p.replaceChild(r,r);r.style.animation='none';void r.offsetWidth;r.style.animation=''}
 $('print').onclick=function(){window.print()};
 $('again').onclick=function(){show('attract')};
- 
+
 /* optional database sync: the kiosk works fully without it */
 var syncT,syncing=false;
 function status(ok){var s=$('sync');s.className='chip '+(ok?'ok':'off');s.lastChild.textContent=ok?'Saved to database':'Saved on this device'}
@@ -307,4 +315,3 @@ api('load').then(function(o){if(!Object.keys(cart).length&&o.items.length){o.ite
 <script src="../js/nav-bloom.js"></script>
 </body>
 </html>
- 
