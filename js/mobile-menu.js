@@ -69,15 +69,33 @@
     var path = window.location.pathname;
     var inGames = /\/games\//.test(path) || /(games|quiz)\.html$/.test(path);
     var inAbout = /about\.html$/.test(path);
+    var isHome = /(?:^|\/)(?:index\.html)?$/.test(path);
+    var currentHash = window.location.hash || "#home";
     menu.querySelectorAll("nav a").forEach(function (link) {
         var href = link.getAttribute("href") || "";
-        var current = /games\.html/.test(href) ? inGames
+        var current = isHome && href.charAt(0) === "#"
+            ? href === currentHash
+            : /games\.html/.test(href) ? inGames
             : /about\.html/.test(href) ? inAbout
-            : (!inGames && !inAbout);
+            : (/^(?:index\.html)?#/.test(href) || /(?:^|\/)index\.html$/.test(href))
+                ? (!inGames && !inAbout)
+                : false;
         link.classList.toggle("current", current);
         if (current) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
     });
- 
+    if (isHome) {
+        window.addEventListener("hashchange", function () {
+            var activeHash = window.location.hash || "#home";
+            menu.querySelectorAll("nav a[href^='#']").forEach(function (link) {
+                var current = link.getAttribute("href") === activeHash;
+                link.classList.toggle("current", current);
+                if (current) link.setAttribute("aria-current", "page");
+                else link.removeAttribute("aria-current");
+            });
+        });
+    }
+
     /* focus the close button once the drawer is open */
     new MutationObserver(function () {
         if (!menu.classList.contains("active")) return;

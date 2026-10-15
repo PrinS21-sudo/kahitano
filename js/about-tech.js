@@ -1,6 +1,6 @@
-const techList = document.querySelector(".portfolio-tech-list");
+const techLists = document.querySelectorAll(".portfolio-tech-list");
 
-if (techList) {
+techLists.forEach(techList => {
     const techButtons = [...techList.querySelectorAll(".portfolio-tech-button")];
 
     function closeTechDescriptions(except) {
@@ -27,4 +27,4 @@ if (techList) {
     document.addEventListener("keydown", event => {
         if (event.key === "Escape") closeTechDescriptions();
     });
-}
+});

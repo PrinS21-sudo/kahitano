@@ -13,14 +13,16 @@
     <link rel="stylesheet" href="css/portfolio.css">
     <link rel="stylesheet" href="css/nav-bloom.css">
     <link rel="stylesheet" href="css/mobile-menu.css">
+    <link rel="stylesheet" href="css/hanging-card.css">
+    <link rel="stylesheet" href="css/about-book.css">
     <script src="js/page-transition.js"></script>
 </head>
-<body class="portfolio-page">
+<body class="portfolio-page portfolio-about-page">
     <button class="theme-fab" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
         <svg class="sun-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
         <svg class="moon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
     </button>
- 
+
     <section class="hero-stage" id="home">
         <div class="hero-frame">
             <video class="background-video" autoplay loop muted playsinline preload="auto" poster="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=90&w=2400">
@@ -30,7 +32,7 @@
             <div class="video-overlay"></div>
             <div class="video-vignette"></div>
             <div class="film-grain"></div>
- 
+
             <div class="content">
                 <header class="header portfolio-site-header">
                     <a href="#home" class="logo" aria-label="Prince Kyle G. Basco home">
@@ -42,8 +44,12 @@
                     </a>
                     <nav class="main-nav" aria-label="Main navigation">
                         <a href="#home" class="nav-link active">Home</a>
-                        <a href="#games" class="nav-link">Games</a>
                         <a href="#about" class="nav-link">About</a>
+                        <a href="#journey" class="nav-link">Journey</a>
+                        <a href="#events" class="nav-link">Events</a>
+                        <a href="#work" class="nav-link">Work</a>
+                        <a href="#games" class="nav-link">Games</a>
+                        <a href="#tools" class="nav-link">Tools</a>
                     </nav>
                     <div class="header-right">
                         <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
@@ -51,16 +57,20 @@
                         </button>
                     </div>
                 </header>
- 
+
                 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
                     <button class="mobile-menu-close" id="menuClose" type="button" aria-label="Close menu"><i data-lucide="x"></i></button>
                     <nav aria-label="Mobile navigation">
                         <a href="#home">Home</a>
-                        <a href="#games">Games</a>
                         <a href="#about">About</a>
+                        <a href="#journey">Journey</a>
+                        <a href="#events">Events</a>
+                        <a href="#work">Work</a>
+                        <a href="#games">Games</a>
+                        <a href="#tools">Tools</a>
                     </nav>
                 </div>
- 
+
                 <main class="hero portfolio-hero">
                     <div class="hero-glow"></div>
                     <div class="hero-text">
@@ -101,13 +111,60 @@
             </div>
         </div>
     </section>
- 
+
     <section class="statement-section portfolio-about" id="about">
         <div class="statement-inner">
-            <h2 data-split>A little bit about me, and the <em>things I love to build.</em></h2>
+            <div class="about-profile">
+                <div class="hang-card" aria-label="Prince Kyle Basco trading card. Drag to swing it, click to flip.">
+                <span class="hc-pin" aria-hidden="true"></span>
+                <div class="hc-swing" role="button" tabindex="0" aria-label="Flip the card">
+                    <span class="hc-hook" aria-hidden="true"></span>
+                    <div class="hc-flip">
+                        <div class="hc-face hc-front">
+                            <div class="hc-name"><span>Prince Kyle <em>Basco</em></span><i class="hc-attr" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 18C16 10 10 8 7 11C4 14 6 20 14 22C7 24 5 30 8 33C11 36 17 33 20 26C23 33 29 36 32 33C35 30 33 24 26 22C34 20 36 14 33 11C30 8 24 10 20 18Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="20" cy="22" r="2.5" fill="currentColor"/></svg></i></div>
+                            <div class="hc-stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                            <div class="hc-art">
+                                <img src="assets/profile.jpg" alt="Prince Kyle Basco" draggable="false">
+                                <div class="hc-fallback" aria-hidden="true"><span>PK</span><small>ADD assets/profile.jpg</small></div>
+                            </div>
+                            <div class="hc-text">
+                                <b>Computer Engineer · Game Developer</b>
+                                <span>BSCpE2A student who builds small games and interactive projects while learning.</span>
+                                <div class="hc-stats"><span>PRINS</span><span>2026</span></div>
+                            </div>
+                        </div>
+                        <div class="hc-face hc-back" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 18C16 10 10 8 7 11C4 14 6 20 14 22C7 24 5 30 8 33C11 36 17 33 20 26C23 33 29 36 32 33C35 30 33 24 26 22C34 20 36 14 33 11C30 8 24 10 20 18Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="20" cy="22" r="2.5" fill="currentColor"/></svg></div>
+                    </div>
+                </div>
+            </div>
+                <div class="about-profile-copy">
+                    <h1>Prince Kyle <em>Basco</em></h1>
+                    <p class="about-profile-role">Computer Engineering Student <span aria-hidden="true">·</span> BSCpE2A</p>
+                    <p class="home-about-lead">I’m a student developer exploring the space where technology, problem-solving, and creativity meet. This site is a home for the games and interactive projects I build while learning.</p>
+                    <a href="#games" class="about-explore-link">Explore my games <i data-lucide="arrow-up-right"></i></a>
+                </div>
+            </div>
+            <section class="pb" aria-label="About Prince Kyle, interactive book">
+                <div class="pb-head">
+                    <h2>A little more <em>about me</em></h2>
+                    <p id="pbHint" aria-live="polite">Click the book to open it.</p>
+                </div>
+                <div class="pb-stage" id="pbStage" tabindex="0" aria-label="Interactive book. Use the left and right arrow keys to turn pages.">
+                    <div class="pb-fit"><div class="pb-scene"><div class="pb-table">
+                        <div class="pb-desk"></div>
+                        <div class="pb-book" id="pbBook"><div class="pb-shadow"></div></div>
+                    </div></div></div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <section class="statement-section home-journey" id="journey">
+        <div class="statement-inner">
+            <h2 data-split>Learning through <em>making.</em></h2>
             <div class="three-columns">
                 <article data-rev style="--d:100ms">
-                    <p>Hi! I’m Prince Kyle G. Basco, a Bachelor of Science in Computer Engineering student in section BSCpE2A.</p>
+                    <p>I’m Prince Kyle G. Basco, a Bachelor of Science in Computer Engineering student in section BSCpE2A.</p>
                 </article>
                 <article data-rev style="--d:200ms">
                     <p>I enjoy learning about technology, programming, and how creative ideas can become useful, playful experiences.</p>
@@ -116,14 +173,27 @@
                     <p>Each project is a chance to experiment, solve a problem, and make something a little more polished than before.</p>
                 </article>
             </div>
-            <a href="about.html" class="collection-button">View more about me <i data-lucide="arrow-up-right"></i></a>
         </div>
     </section>
- 
+
+    <section class="collection-section home-events" id="events">
+        <div class="collection-inner">
+            <h2 data-split>Events</h2>
+            <p class="portfolio-section-intro" data-rev>No event details have been added yet.</p>
+        </div>
+    </section>
+
+    <section class="collection-section home-work" id="work">
+        <div class="collection-inner">
+            <h2 data-split>Work</h2>
+            <p class="portfolio-section-intro" data-rev>No work details have been added yet.</p>
+        </div>
+    </section>
+
     <section class="collection-section portfolio-game-section" id="games">
         <div class="collection-inner">
             <h2 data-split>Take a moment to <em>play.</em></h2>
-            <p class="portfolio-section-intro" data-rev>A growing collection of browser games and interactive projects made while learning.</p>
+            <p class="portfolio-section-intro" data-rev>A small collection of browser games made as a web development project. Each one is designed to be quick to pick up and fun to replay.</p>
             <div class="portfolio-game-grid">
                 <a class="portfolio-game-card" href="games/color.html" data-rev style="--d:80ms">
                     <span class="portfolio-game-icon" aria-hidden="true">◉</span>
@@ -153,23 +223,70 @@
             <a href="games.html" class="collection-button">View all games <i data-lucide="arrow-up-right"></i></a>
         </div>
     </section>
- 
+
+    <section class="statement-section home-tools" id="tools">
+        <div class="statement-inner">
+            <h2 data-split>Tools I <em>use.</em></h2>
+            <p class="home-tools-intro" data-rev>Languages and AI assistants I use while building projects and learning.</p>
+            <h3 class="home-tools-heading">Languages</h3>
+            <ul class="portfolio-tech-list" aria-label="Languages and technologies">
+                <li>
+                    <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-html" aria-expanded="false" aria-controls="tech-use-html">HTML</button>
+                    <span class="portfolio-tech-use" id="tech-use-html" role="tooltip">Structures the pages and content of the portfolio and games.</span>
+                </li>
+                <li>
+                    <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-css" aria-expanded="false" aria-controls="tech-use-css">CSS</button>
+                    <span class="portfolio-tech-use" id="tech-use-css" role="tooltip">Styles the layouts, colors, and responsive page designs.</span>
+                </li>
+                <li>
+                    <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-javascript" aria-expanded="false" aria-controls="tech-use-javascript">JavaScript</button>
+                    <span class="portfolio-tech-use" id="tech-use-javascript" role="tooltip">Powers game logic, page interactions, and the animated book.</span>
+                </li>
+                <li>
+                    <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-php" aria-expanded="false" aria-controls="tech-use-php">PHP</button>
+                    <span class="portfolio-tech-use" id="tech-use-php" role="tooltip">Handles server requests for food orders and leaderboard scores.</span>
+                </li>
+                <li>
+                    <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-mysql" aria-expanded="false" aria-controls="tech-use-mysql">MySQL</button>
+                    <span class="portfolio-tech-use" id="tech-use-mysql" role="tooltip">Stores food orders and leaderboard scores for the PHP endpoints.</span>
+                </li>
+            </ul>
+            <h3 class="home-tools-heading home-tools-assistants-heading">AI Assistants</h3>
+            <ul class="portfolio-tech-list" aria-label="AI assistants">
+                <li>
+                    <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-claude-code" aria-expanded="false" aria-controls="tech-use-claude-code">Claude Code</button>
+                    <span class="portfolio-tech-use" id="tech-use-claude-code" role="tooltip">AI assistant I use to explore design ideas and refine the visual direction of my projects.</span>
+                </li>
+                <li>
+                    <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-chatgpt" aria-expanded="false" aria-controls="tech-use-chatgpt">ChatGPT</button>
+                    <span class="portfolio-tech-use" id="tech-use-chatgpt" role="tooltip">AI assistant used to explore ideas and get help while learning and building projects.</span>
+                </li>
+                <li>
+                    <button class="portfolio-tech-button" type="button" aria-describedby="tech-use-copilot" aria-expanded="false" aria-controls="tech-use-copilot">Copilot</button>
+                    <span class="portfolio-tech-use" id="tech-use-copilot" role="tooltip">AI coding assistant used in the editor for coding help and suggestions.</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
     <footer class="footer portfolio-footer">
         <div class="footer-top">
             <div class="footer-wordmark">PRINS</div>
             <div class="footer-grid">
                 <div><p>Prince Kyle G. Basco<br>BSCpE2A · 2026</p></div>
-                <div><div class="footer-links"><a href="#home">Home</a><a href="#games">Games</a><a href="#about">About</a></div></div>
+                <div><div class="footer-links"><a href="#home">Home</a><a href="#about">About</a><a href="#journey">Journey</a><a href="#events">Events</a><a href="#work">Work</a><a href="#games">Games</a><a href="#tools">Tools</a></div></div>
             </div>
         </div>
         <div class="footer-bottom"><span>Built while learning</span><span class="script-accent">one idea at a time</span><span>© 2026 Prince Kyle G. Basco</span></div>
     </footer>
- 
+
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="js/navigation.js"></script>
     <script src="js/dark-mode.js"></script>
     <script src="js/nav-bloom.js"></script>
     <script src="js/mobile-menu.js"></script>
+    <script src="js/hanging-card.js"></script>
+    <script src="js/about-book.js"></script>
+    <script src="js/about-tech.js"></script>
 </body>
 </html>
- 

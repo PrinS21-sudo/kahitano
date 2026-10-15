@@ -743,7 +743,7 @@ document
 
 const sections = [
     ...document.querySelectorAll(
-        "#home, #games, #about"
+        "#home, #about, #journey, #events, #work, #games, #tools"
     )
 ];
 

@@ -31,9 +31,8 @@ const SPREADS = [
     art: { type: "hello", label: "Say hi", c: ["#f3d6dc", "#f87b97", "#1c1215"] },
     text: {
       tag: "Beyond the code",
-      title: "Add something personal here",
-      body: "Replace this with your school, hobbies or a fun fact, then add a way to reach you.",
-      link: { href: "mailto:you@example.com", label: "Get in touch" },
+      title: "Learning by building",
+      body: "I enjoy exploring technology, solving problems, and making each project more polished than the last.",
       dark: false
     }
   }

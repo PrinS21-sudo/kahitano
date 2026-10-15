@@ -148,6 +148,8 @@ body .mobile-menu nav a:nth-child(2) { --i: 1; }
 body .mobile-menu nav a:nth-child(3) { --i: 2; }
 body .mobile-menu nav a:nth-child(4) { --i: 3; }
 body .mobile-menu nav a:nth-child(5) { --i: 4; }
+body .mobile-menu nav a:nth-child(6) { --i: 5; }
+body .mobile-menu nav a:nth-child(7) { --i: 6; }
  
 body .mobile-menu.active nav a:hover,
 body .mobile-menu.active nav a:focus-visible {

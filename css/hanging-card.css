@@ -1,0 +1,260 @@
+.about-profile:has(.hang-card) {
+    grid-template-columns: minmax(260px, 380px) minmax(0, 1fr);
+    align-items: start;
+}
+
+.hang-card {
+    --hc-w: min(100%, 340px);
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    padding-top: 100px;
+    margin: -2rem auto 0;
+    display: flex;
+    justify-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.hc-pin {
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 9px;
+    height: 9px;
+    margin-left: -4.5px;
+    border-radius: 50%;
+    background: var(--pink, #c8567f);
+}
+
+.hc-swing {
+    position: relative;
+    width: var(--hc-w);
+    container-type: inline-size;
+    transform-origin: 50% -100px;
+    will-change: transform;
+    backface-visibility: hidden;
+    cursor: grab;
+    touch-action: pan-y;
+    outline: none;
+}
+
+.hc-swing:active { cursor: grabbing; }
+
+.hc-swing:focus-visible .hc-face {
+    box-shadow: 0 0 0 3px var(--pink, #c8567f), 0 22px 50px rgba(0, 0, 0, .3);
+}
+
+.hc-swing::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -100px;
+    width: 1px;
+    height: 102px;
+    background: var(--ink, #222);
+    opacity: .55;
+}
+
+.hc-hook {
+    position: absolute;
+    z-index: 3;
+    top: -5px;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    margin-left: -7px;
+    border: 1.5px solid var(--pink, #c8567f);
+    border-radius: 50%;
+    background: var(--paper, #fff);
+}
+
+.hc-flip {
+    position: relative;
+    aspect-ratio: 59 / 86;
+    transform-style: preserve-3d;
+    transform: perspective(1200px) rotateY(180deg);
+    will-change: transform;
+}
+
+.hc-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 24px 50px rgba(16, 16, 24, .22), 0 2px 8px rgba(16, 16, 24, .18);
+}
+
+.hc-front {
+    padding: 6% 6% 5.5%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.6%;
+    background: var(--paper-2, var(--paper, #f6f1ea));
+    border: 1px solid color-mix(in srgb, var(--pink, #c8567f) 60%, var(--line, #ccc));
+    color: var(--ink, #1b1b22);
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+.hc-front::before {
+    content: "";
+    position: absolute;
+    inset: 2.4%;
+    border: 1px solid var(--line, rgba(0, 0, 0, .15));
+    pointer-events: none;
+}
+
+.hc-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    padding: 1% 1% 2.2%;
+    border-bottom: 1px solid var(--line, rgba(0, 0, 0, .18));
+    font-size: clamp(.8rem, 5.4cqw, 1.3rem);
+    font-weight: 400;
+    letter-spacing: -.01em;
+    white-space: nowrap;
+}
+
+.hc-name em { color: var(--pink, #c8567f); font-style: italic; }
+
+.hc-attr {
+    width: 1.5em;
+    height: 1.5em;
+    flex: none;
+    color: var(--pink, #c8567f);
+}
+
+.hc-attr svg { width: 100%; height: 100%; display: block; }
+
+.hc-stars {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2.2%;
+    padding-right: 1%;
+}
+
+.hc-stars i {
+    width: 5.5%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--pink, #c8567f);
+    opacity: .85;
+}
+
+.hc-art {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    border: 1px solid color-mix(in srgb, var(--pink, #c8567f) 55%, var(--line, #ccc));
+    outline: 5px solid color-mix(in srgb, var(--pink, #c8567f) 9%, var(--paper, #fff));
+    background: var(--paper, #fff);
+    overflow: hidden;
+}
+
+.hc-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+.hc-art .hc-fallback {
+    display: none;
+    position: absolute;
+    inset: 0;
+    place-content: center;
+    justify-items: center;
+    gap: .3rem;
+    color: var(--pink, #c8567f);
+    background: color-mix(in srgb, var(--pink, #c8567f) 8%, var(--paper-2, #f6f1ea));
+    font-size: clamp(2.6rem, 20cqw, 5rem);
+    line-height: 1;
+}
+
+.hc-fallback small {
+    font-family: Inter, sans-serif;
+    font-size: .6rem;
+    letter-spacing: .18em;
+    color: var(--ink, #222);
+    opacity: .6;
+}
+
+.hc-art.no-photo img { display: none; }
+.hc-art.no-photo .hc-fallback { display: grid; }
+
+.hc-text {
+    padding: 2.5% 1% 0;
+    font-family: Inter, sans-serif;
+    font-size: clamp(.62rem, 3.3cqw, .85rem);
+    line-height: 1.55;
+}
+
+.hc-text b {
+    display: block;
+    margin-bottom: .2rem;
+    color: var(--pink, #c8567f);
+    font-weight: 500;
+    font-size: .8em;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.hc-text > span { opacity: .78; }
+
+.hc-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: .5rem;
+    padding-top: .4rem;
+    border-top: 1px solid var(--line, rgba(0, 0, 0, .18));
+    font-size: .8em;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.hc-shine {
+    position: absolute;
+    inset: 0 -30%;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, .26) 50%, transparent 62%);
+    mix-blend-mode: soft-light;
+    will-change: transform;
+}
+
+.hc-back {
+    transform: rotateY(180deg);
+    display: grid;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--pink, #c8567f) 60%, var(--line, #ccc));
+    background:
+        radial-gradient(circle at 50% 50%, var(--paper-2, #f6f1ea) 0 16%, transparent 17%),
+        repeating-conic-gradient(from 0deg at 50% 50%,
+            color-mix(in srgb, var(--pink, #c8567f) 70%, #000) 0deg 6deg,
+            color-mix(in srgb, var(--pink, #c8567f) 20%, var(--paper, #fff)) 6deg 12deg);
+    color: var(--pink, #c8567f);
+}
+
+.hc-back::before {
+    content: "";
+    position: absolute;
+    inset: 3%;
+    border: 1px solid rgba(255, 255, 255, .55);
+    pointer-events: none;
+}
+
+.hc-back svg { position: relative; width: 24%; height: auto; }
+
+@media (max-width: 520px) {
+    .about-profile:has(.hang-card) { grid-template-columns: 1fr; }
+    .hang-card { margin-top: 0; max-width: 340px; --hc-w: min(88%, 320px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hc-flip { transform: none; }
+}
